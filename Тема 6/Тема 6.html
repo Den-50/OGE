@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тема 6. Программа с условным оператором</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<div class="container">
+    <header class="header">
+        <h1><span class="emoji">🔀</span>Программа с условным оператором</h1>
+        <p>Условие if...else на пяти языках программирования — разбираем визуально, без запуска кода</p>
+    </header>
+
+    <nav class="nav">
+        <ul>
+            <li><a href="#theory">📐 Теория</a></li>
+            <li><a href="#method">🧭 Визуальный метод решения</a></li>
+            <li><a href="#example">🎯 Разбор примера</a></li>
+            <li><a href="#explanation">💡 Пояснения</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <section id="theory" class="section">
+            <h2><span class="emoji">📐</span>Условный оператор на разных языках</h2>
+
+            <p>Условный оператор проверяет логическое условие и в зависимости от того, истинно оно или ложно,
+                выполняет одну из двух ветвей: <strong>если... то... иначе...</strong>. В заданиях ОГЭ одна и та же
+                программа часто дана сразу на пяти языках — Бейсик, Python, Паскаль, Алгоритмический язык и C++.
+                Внешне код выглядит по-разному, но логика во всех случаях одинаковая.</p>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Язык</th>
+                        <th>Конструкция «если...иначе»</th>
+                        <th>«ИЛИ»</th>
+                        <th>«И»</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><strong>Бейсик</strong></td>
+                        <td><span class="code">IF ... THEN ... ELSE ... ENDIF</span></td>
+                        <td><span class="code">OR</span></td>
+                        <td><span class="code">AND</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Python</strong></td>
+                        <td><span class="code">if ...: ... else: ...</span></td>
+                        <td><span class="code">or</span></td>
+                        <td><span class="code">and</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Паскаль</strong></td>
+                        <td><span class="code">if ... then ... else ...</span></td>
+                        <td><span class="code">or</span></td>
+                        <td><span class="code">and</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Алгоритмический язык</strong></td>
+                        <td><span class="code">если ... то ... иначе ... все</span></td>
+                        <td><span class="code">или</span></td>
+                        <td><span class="code">и</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>C++</strong></td>
+                        <td><span class="code">if (...) { ... } else { ... }</span></td>
+                        <td><span class="code">||</span></td>
+                        <td><span class="code">&amp;&amp;</span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="success">
+                <strong>💡 Главное:</strong> не важно, на каком языке записана программа — важно правильно прочитать
+                <strong>условие</strong>. Как только условие переведено в обычную математическую форму (например,
+                <span class="code">s &gt; 10 или t &gt; A</span>), дальше программа и язык больше не нужны.
+            </div>
+        </section>
+
+        <section id="method" class="section">
+            <h2><span class="emoji">🧭</span>Визуальный метод решения</h2>
+
+            <p>Типичное задание: дано условие с неизвестным параметром (например, <span class="code">A</span>),
+                набор пар входных значений и требование — сколько раз программа напечатает «YES» (или похожее
+                условие на количество). Нужно найти, для скольких целых значений параметра это выполняется.</p>
+
+            <div class="task-card">
+                <h4>1️⃣ Запишите условие в обычном математическом виде</h4>
+                <div class="solution">
+                    <p>Переведите ключевые слова языка в привычные символы: <span class="code">OR/или/||</span> →
+                        «хотя бы одно из условий истинно», <span class="code">AND/и/&amp;&amp;</span> → «оба условия
+                        истинны одновременно».</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>2️⃣ Разделите входные пары на две группы</h4>
+                <div class="solution">
+                    <p><strong>Группа «всегда YES»</strong> — пары, где часть условия без параметра уже истинна
+                        сама по себе (результат не зависит от A).</p>
+                    <p><strong>Группа «зависит от A»</strong> — пары, где решение определяется только той частью
+                        условия, где участвует параметр.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>3️⃣ Выпишите нужные неравенства для зависимой группы</h4>
+                <div class="solution">
+                    <p>Для каждой пары из зависимой группы запишите неравенство относительно A (например,
+                        <span class="code">t &gt; A</span>) и подставьте известное значение t — получится просто
+                        число, с которым сравнивается A.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>4️⃣ Посчитайте, сколько «YES» нужно получить от зависимой группы</h4>
+                <div class="solution">
+                    <p>Вычтите количество «всегда YES» из общего требуемого количества «YES» — остаток должна
+                        обеспечить зависимая группа.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>5️⃣ Отсортируйте числа и найдите диапазон для A</h4>
+                <div class="solution">
+                    <p>Расположите числа зависимой группы по возрастанию. Граница нужного количества «YES»
+                        находится между двумя соседними числами в этом ряду — там и лежит диапазон подходящих
+                        значений A.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>6️⃣ Посчитайте целые числа в найденном диапазоне</h4>
+                <div class="solution">
+                    <p>Это и есть ответ на вопрос «сколько целых значений A подходит».</p>
+                </div>
+            </div>
+
+            <div class="warning">
+                <strong>📌 Важно:</strong> строгое неравенство (<span class="code">&gt;</span>) и нестрогое
+                (<span class="code">&ge;</span>) дают разные границы — всегда проверяйте знак сравнения в условии.
+            </div>
+        </section>
+
+        <section id="example" class="section">
+            <h2><span class="emoji">🎯</span>Разбор примера</h2>
+
+            <h3>Условие задачи</h3>
+
+            <p>Программа на пяти языках проверяет условие для целых <span class="code">s</span>,
+                <span class="code">t</span>, <span class="code">A</span>:</p>
+
+            <div class="example-box" style="text-align: center;">
+                <p style="font-size: 1.2em;">
+                    <strong>если s &gt; 10 или t &gt; A &nbsp;→&nbsp; «YES», иначе &nbsp;→&nbsp; «NO»</strong>
+                </p>
+            </div>
+
+            <p>Было проведено 9 запусков программы с парами значений <span class="code">(s; t)</span>:</p>
+
+            <div class="example-box">
+                <p style="text-align: center; font-size: 1.1em;">
+                    (1, 2); (11, 2); (1, 12); (11, 12); (−11, −12); (−11, 12); (−12, 11); (10, 10); (10, 5)
+                </p>
+            </div>
+
+            <p><strong>Укажите количество целых значений параметра A, при которых для указанных входных данных
+                программа напечатает «YES» ровно семь раз.</strong></p>
+
+            <h3>Шаг 1. Делим пары на «всегда YES» и «зависит от A»</h3>
+
+            <p>Так как условие — это «s &gt; 10 <strong>или</strong> t &gt; A», результат точно будет «YES»,
+                если уже <span class="code">s &gt; 10</span>, независимо от A.</p>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Пара (s; t)</th>
+                        <th>s &gt; 10 ?</th>
+                        <th>Результат</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>(1; 2)</td><td>нет</td><td>зависит от A (t = 2)</td></tr>
+                    <tr style="background: #d4edda;"><td>(11; 2)</td><td><strong>да</strong></td><td><strong>всегда YES</strong></td></tr>
+                    <tr><td>(1; 12)</td><td>нет</td><td>зависит от A (t = 12)</td></tr>
+                    <tr style="background: #d4edda;"><td>(11; 12)</td><td><strong>да</strong></td><td><strong>всегда YES</strong></td></tr>
+                    <tr><td>(−11; −12)</td><td>нет</td><td>зависит от A (t = −12)</td></tr>
+                    <tr><td>(−11; 12)</td><td>нет</td><td>зависит от A (t = 12)</td></tr>
+                    <tr><td>(−12; 11)</td><td>нет</td><td>зависит от A (t = 11)</td></tr>
+                    <tr><td>(10; 10)</td><td>нет</td><td>зависит от A (t = 10)</td></tr>
+                    <tr><td>(10; 5)</td><td>нет</td><td>зависит от A (t = 5)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p>Итого: <strong>2 пары всегда дают YES</strong>, а остальные <strong>7 пар зависят от A</strong>
+                (условие для них — <span class="code">t &gt; A</span>).</p>
+
+            <h3>Шаг 2. Сколько YES должна дать зависимая группа</h3>
+
+            <p>Нужно 7 YES всего, 2 уже гарантированы — значит, из 7 зависимых пар ровно
+                <strong>5 должны дать YES</strong> (то есть t &gt; A), а <strong>2 — дать NO</strong>
+                (t ≤ A).</p>
+
+            <h3>Шаг 3. Сортируем значения t зависимой группы</h3>
+
+            <div class="example-box" style="text-align: center;">
+                <p style="font-size: 1.15em;">
+                    −12 &nbsp;&lt;&nbsp; 2 &nbsp;&lt;&nbsp; 5 &nbsp;&lt;&nbsp; 10 &nbsp;&lt;&nbsp; 11 &nbsp;&lt;&nbsp; 12 &nbsp;&lt;&nbsp; 12
+                </p>
+            </div>
+
+            <p>Нужно, чтобы ровно <strong>2 наименьших</strong> значения (−12 и 2) были <strong>≤ A</strong>
+                (дают NO), а остальные пять (5, 10, 11, 12, 12) — <strong>&gt; A</strong> (дают YES).</p>
+
+            <h3>Шаг 4. Находим диапазон для A</h3>
+
+            <div class="chain">
+                <div class="chain-num">−12</div>
+                <div class="chain-arrow"><span class="arrow-line">≤ A</span></div>
+                <div class="chain-num">2</div>
+                <div class="chain-arrow"><span class="arrow-line">≤ A &lt;</span></div>
+                <div class="chain-num finish">5</div>
+                <div class="chain-arrow"><span class="arrow-line">&lt; A ≤</span></div>
+                <div class="chain-num">10</div>
+            </div>
+
+            <p>Значит, подходят все целые A, для которых <strong>2 ≤ A &lt; 5</strong>, то есть
+                <span class="code">A ∈ {2, 3, 4}</span>.</p>
+
+            <h3>Проверка (A = 3)</h3>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                    <tr><th>t</th><th>2</th><th>12</th><th>−12</th><th>12</th><th>11</th><th>10</th><th>5</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>t &gt; 3 ?</td>
+                        <td>NO</td><td>YES</td><td>NO</td><td>YES</td><td>YES</td><td>YES</td><td>YES</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p>5 YES из зависимой группы + 2 гарантированных YES = <strong>7 YES</strong> — всё сходится.</p>
+
+            <div class="success">
+                <strong>✅ Ответ:</strong> подходят 3 целых значения параметра A — <strong>2, 3 и 4</strong>.
+            </div>
+        </section>
+
+        <section id="explanation" class="section">
+            <h2><span class="emoji">💡</span>Ключевые моменты при решении</h2>
+
+            <div class="task-card">
+                <h4>1️⃣ Язык программы не важен — важна логика условия</h4>
+                <div class="solution">
+                    <p>Сразу переведите код на любом из пяти языков в обычную запись с «если... иначе» и
+                        знаками сравнения — дальше работайте только с этой записью.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>2️⃣ «ИЛИ» — ищите часть условия, которая не зависит от параметра</h4>
+                <div class="solution">
+                    <p>Если хотя бы одно слагаемое условия через «или» истинно само по себе (без параметра) —
+                        результат уже предрешён, и такую пару можно сразу отложить в группу «всегда YES»
+                        (или «всегда NO», если условие через «и»).</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>3️⃣ Строгие и нестрогие неравенства — разные границы</h4>
+                <div class="solution">
+                    <p><span class="code">t &gt; A</span> и <span class="code">t ≥ A</span> дают разный результат
+                        при t = A. Внимательно смотрите на знак в условии.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>4️⃣ Считайте целые числа в диапазоне аккуратно</h4>
+                <div class="solution">
+                    <p>Если получили диапазон вида <span class="code">2 ≤ A &lt; 5</span>, не забывайте, что левая
+                        граница включена, а правая нет — переберите значения вручную (2, 3, 4), чтобы не ошибиться.</p>
+                </div>
+            </div>
+
+            <div class="success">
+                <h3>✅ Алгоритм решения любой задачи этой темы</h3>
+                <ol>
+                    <li>Переведите условие программы в обычную математическую форму</li>
+                    <li>Разделите входные пары на «всегда YES/NO» и «зависит от параметра»</li>
+                    <li>Для зависимых пар запишите неравенства и подставьте известные числа</li>
+                    <li>Вычислите, сколько YES должна дать зависимая группа</li>
+                    <li>Отсортируйте числа, найдите граничный диапазон для параметра и посчитайте целые значения</li>
+                </ol>
+            </div>
+        </section>
+    </main>
+
+    <a href="#" id="backToTop" class="back-to-top" title="Вернуться в начало">↑</a>
+</div>
+
+<style>
+    .back-to-top {
+        display: none;
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: #3498db;
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 50px;
+        font-size: 24px;
+        text-decoration: none;
+        cursor: pointer;
+        z-index: 999;
+        transition: all 0.3s ease;
+    }
+
+    .back-to-top.visible {
+        display: block;
+    }
+
+    .back-to-top:hover {
+        background: #2980b9;
+        transform: translateY(-5px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .section ul {
+        margin-left: 20px;
+        margin-top: 10px;
+    }
+
+    .section ul li {
+        margin-bottom: 8px;
+        line-height: 1.7;
+    }
+
+    .section ol {
+        margin-left: 20px;
+        margin-top: 10px;
+    }
+
+    .section ol li {
+        margin-bottom: 10px;
+        line-height: 1.7;
+    }
+
+    /* === VALUE CHAIN DIAGRAM === */
+    .chain {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin: 20px 0;
+        padding: 10px;
+    }
+
+    .chain-num {
+        background: #ffffff;
+        border: 2px solid var(--primary);
+        border-radius: 12px;
+        padding: 10px 18px;
+        font-weight: bold;
+        font-size: 1.3em;
+        color: var(--secondary);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .chain-num.finish {
+        border-color: var(--warning);
+        background: #fff3cd;
+        color: #8a5a00;
+    }
+
+    .chain-arrow {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 0.95em;
+        color: var(--text-muted);
+        white-space: nowrap;
+        font-weight: bold;
+    }
+</style>
+
+<script>
+    const backToTop = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+            backToTop.classList.add('visible');
+        } else {
+            backToTop.classList.remove('visible');
+        }
+    });
+
+    document.getElementById('backToTop').addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    window.addEventListener('scroll', function() {
+        const sections = document.querySelectorAll('.section');
+        const navLinks = document.querySelectorAll('.nav a');
+
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (pageYOffset >= sectionTop - 200) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.style.background = '';
+            if (link.getAttribute('href') === '#' + current) {
+                link.style.background = '#3498db';
+            }
+        });
+    });
+</script>
+</body>
+</html>

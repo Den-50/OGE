@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тема 5. Простой линейный алгоритм для формального исполнителя</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<div class="container">
+    <header class="header">
+        <h1><span class="emoji">🤖</span>Простой линейный алгоритм для формального исполнителя</h1>
+        <p>Программы-команды, которые меняют число на экране — решаем визуально, без программирования</p>
+    </header>
+
+    <nav class="nav">
+        <ul>
+            <li><a href="#theory">📐 Теория</a></li>
+            <li><a href="#method">🧭 Визуальный метод решения</a></li>
+            <li><a href="#example1">🎯 Пример 1: Вычислитель</a></li>
+            <li><a href="#example2">🎯 Пример 2: Альфа</a></li>
+            <li><a href="#explanation">💡 Пояснения</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <section id="theory" class="section">
+            <h2><span class="emoji">📐</span>Что такое формальный исполнитель и программа для него</h2>
+
+            <p><strong>Формальный исполнитель</strong> — это условное «устройство», которое умеет выполнять
+                несколько пронумерованных команд над числом, показанным на экране. Каждая команда превращает одно
+                число в другое по строгому правилу.</p>
+
+            <div class="example-box">
+                <h4>Типичные команды исполнителей в ОГЭ</h4>
+                <ul>
+                    <li><strong>прибавь N</strong> / <strong>вычесть N</strong> — обычная арифметика:
+                        x → x + N или x → x − N</li>
+                    <li><strong>умножь на N</strong> / <strong>раздели на N</strong> — x → x·N или x → x/N</li>
+                    <li><strong>приписать k</strong> — дописывает цифру k <strong>справа</strong> к числу. Это не
+                        текстовая склейка, а арифметика: x → 10·x + k</li>
+                </ul>
+            </div>
+
+            <div class="success">
+                <strong>💡 Почему «линейный»:</strong> в этой теме <strong>нет</strong> циклов и условий — команды
+                просто выполняются одна за другой строго в том порядке, в котором записаны в программе. Программа —
+                это просто последовательность номеров команд, например <span class="code">12111</span> означает
+                «сначала команда 1, затем команда 2, затем команда 1, команда 1, команда 1».
+            </div>
+
+            <div class="warning">
+                <strong>📌 Два вида заданий в этой теме:</strong>
+                <ul>
+                    <li><strong>Найти программу</strong> — известны обе команды и их действие, начальное и конечное
+                        число. Нужно подобрать последовательность команд (не длиннее заданного числа шагов)</li>
+                    <li><strong>Найти неизвестный параметр</strong> — программа уже дана целиком, но в одной из
+                        команд спрятана неизвестная (например, делитель b). Известны начальное и конечное число —
+                        нужно вычислить неизвестную</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="method" class="section">
+            <h2><span class="emoji">🧭</span>Визуальный метод решения</h2>
+
+            <h3>Если нужно найти программу — идём от конца к началу</h3>
+
+            <p>Перебирать варианты вперёд (от старта) неудобно: число быстро «разбегается» в разные стороны.
+                Гораздо надёжнее двигаться <strong>от конечного числа к начальному</strong>, применяя
+                <strong>обратные операции</strong>, пока не дойдём до старта.</p>
+
+            <div class="task-card">
+                <h4>1️⃣ Для каждой команды запишите обратную к ней</h4>
+                <div class="solution">
+                    <p>«прибавь N» ⇄ «вычесть N»; «умножь на N» ⇄ «раздели на N»; «приписать k» ⇄ «отбросить
+                        последнюю цифру» — но это действие применимо, <strong>только если</strong> число
+                        действительно оканчивается на цифру k.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>2️⃣ Двигайтесь от конечного числа назад маленькими шагами</h4>
+                <div class="solution">
+                    <p>На каждом шаге применяйте подходящую обратную операцию (если можно применить несколько —
+                        пробуйте ту, что быстрее приближает к стартовому числу). Записывайте цепочку чисел.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>3️⃣ Как только дошли до стартового числа — разверните цепочку</h4>
+                <div class="solution">
+                    <p>Прямая программа — это те же операции, но в обратном порядке и с прямыми (не обратными)
+                        командами.</p>
+                </div>
+            </div>
+
+            <h3>Если программа уже дана — просто считайте вперёд символически</h3>
+
+            <div class="task-card">
+                <h4>Подставьте неизвестную и пройдите по программе шаг за шагом</h4>
+                <div class="solution">
+                    <p>Выполняйте команды строго по порядку, как написано в программе, оставляя неизвестную (например,
+                        b) в виде буквы. В конце получится выражение, равное известному результату — из него
+                        неизвестная находится обычным уравнением.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="example1" class="section">
+            <h2><span class="emoji">🎯</span>Пример 1: исполнитель Вычислитель — ищем программу</h2>
+
+            <h3>Условие задачи</h3>
+
+            <p>У исполнителя Вычислитель две команды, которым присвоены номера:</p>
+            <ol>
+                <li><strong>вычесть 4</strong></li>
+                <li><strong>приписать 2</strong></li>
+            </ol>
+            <p>Первая из них уменьшает число на 4, а вторая приписывает к нему справа 2. Составьте алгоритм
+                получения <strong>из числа 9 числа 4</strong>, содержащий не более 5 команд. В ответе запишите
+                только номера команд.</p>
+
+            <h3>Шаг 1. Обратные команды</h3>
+
+            <div class="example-box">
+                <ul>
+                    <li>Команда 1 «вычесть 4» (x → x − 4) ⇄ обратная: «прибавить 4» (x → x + 4)</li>
+                    <li>Команда 2 «приписать 2» (x → 10x + 2) ⇄ обратная: «отбросить последнюю цифру 2»
+                        (x → (x − 2) / 10), применимо только если x оканчивается на 2</li>
+                </ul>
+            </div>
+
+            <h3>Шаг 2. Идём от конечного числа 4 назад к числу 9</h3>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Текущее число</th>
+                        <th>Можно применить обратную команду</th>
+                        <th>Новое число</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>4</td>
+                        <td>не оканчивается на 2 → только «+4»</td>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>не оканчивается на 2 → только «+4»</td>
+                        <td>12</td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td>оканчивается на 2 → «отбросить 2»: (12 − 2) / 10</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>не оканчивается на 2 → только «+4»</td>
+                        <td>5</td>
+                    </tr>
+                    <tr style="background: #d4edda;">
+                        <td>5</td>
+                        <td>не оканчивается на 2 → только «+4»</td>
+                        <td><strong>9 — дошли до старта!</strong></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Шаг 3. Разворачиваем цепочку в прямую программу</h3>
+
+            <p>Обратный путь (от 4 к 9) был: <span class="code">+4, +4, отбросить 2, +4, +4</span>. Прямая программа
+                — это те же шаги в обратном порядке, но прямыми командами:</p>
+
+            <div class="chain">
+                <div class="chain-num start">9</div>
+                <div class="chain-arrow"><span class="arrow-line">→</span><span>вычесть 4 (1)</span></div>
+                <div class="chain-num">5</div>
+                <div class="chain-arrow"><span class="arrow-line">→</span><span>вычесть 4 (1)</span></div>
+                <div class="chain-num">1</div>
+                <div class="chain-arrow"><span class="arrow-line">→</span><span>приписать 2 (2)</span></div>
+                <div class="chain-num">12</div>
+                <div class="chain-arrow"><span class="arrow-line">→</span><span>вычесть 4 (1)</span></div>
+                <div class="chain-num">8</div>
+                <div class="chain-arrow"><span class="arrow-line">→</span><span>вычесть 4 (1)</span></div>
+                <div class="chain-num finish">4</div>
+            </div>
+
+            <div class="success">
+                <strong>✅ Ответ:</strong> программа <span class="code">11211</span> — ровно 5 команд, как и
+                требовалось. (Это не единственный возможный ответ, подойдёт любой верный.)
+            </div>
+        </section>
+
+        <section id="example2" class="section">
+            <h2><span class="emoji">🎯</span>Пример 2: исполнитель Альфа — ищем неизвестный параметр</h2>
+
+            <h3>Условие задачи</h3>
+
+            <p>У исполнителя Альфа две команды, которым присвоены номера:</p>
+            <ol>
+                <li><strong>прибавь 2</strong></li>
+                <li><strong>раздели на b</strong> (b — неизвестное натуральное число; b ≥ 2)</li>
+            </ol>
+            <p>Выполняя первую из них, Альфа увеличивает число на экране на 2, а выполняя вторую, делит это число
+                на b. Программа для исполнителя Альфа — это последовательность номеров команд. Известно, что
+                программа <strong>12111</strong> переводит число <strong>47</strong> в число <strong>13</strong>.
+                Определите значение b.</p>
+
+            <h3>Решение: проходим по программе вперёд с неизвестной b</h3>
+
+            <p>Здесь программа уже известна целиком, искать её не нужно — просто выполняем команды по порядку,
+                оставляя b буквой, и в конце решаем уравнение.</p>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Шаг</th>
+                        <th>Команда</th>
+                        <th>Действие</th>
+                        <th>Значение на экране</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>старт</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>47</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>1 (прибавь 2)</td>
+                        <td>47 + 2</td>
+                        <td>49</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>2 (раздели на b)</td>
+                        <td>49 / b</td>
+                        <td>49 / b</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>1 (прибавь 2)</td>
+                        <td>49/b + 2</td>
+                        <td>49/b + 2</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>1 (прибавь 2)</td>
+                        <td>49/b + 4</td>
+                        <td>49/b + 4</td>
+                    </tr>
+                    <tr style="background: #d4edda;">
+                        <td>5</td>
+                        <td>1 (прибавь 2)</td>
+                        <td>49/b + 6</td>
+                        <td><strong>49/b + 6 = 13</strong></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Решаем уравнение</h3>
+
+            <div class="example-box" style="text-align: center;">
+                <p style="font-size: 1.2em;">49 / b + 6 = 13 &nbsp;→&nbsp; 49 / b = 7 &nbsp;→&nbsp; <strong>b = 7</strong></p>
+            </div>
+
+            <div class="success">
+                <strong>✅ Ответ:</strong> b = 7. Проверка: 47 → (+2) 49 → (/7) 7 → (+2) 9 → (+2) 11 → (+2) 13 ✓,
+                и b = 7 удовлетворяет условию b ≥ 2.
+            </div>
+        </section>
+
+        <section id="explanation" class="section">
+            <h2><span class="emoji">💡</span>Ключевые моменты при решении</h2>
+
+            <div class="task-card">
+                <h4>1️⃣ Команды выполняются строго по порядку</h4>
+                <div class="solution">
+                    <p>Программа читается слева направо, без пропусков и условий — это и есть «линейный»
+                        алгоритм. Нельзя менять порядок команд местами.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>2️⃣ «Приписать k» — это арифметика, а не текст</h4>
+                <div class="solution">
+                    <p>«Приписать k» означает x → 10x + k. Поэтому отменить эту команду (идя назад) можно только
+                        если число действительно оканчивается на цифру k.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>3️⃣ Ищете программу — идите от конца к началу</h4>
+                <div class="solution">
+                    <p>Так перебор получается значительно короче: от большого или «неудобного» стартового числа
+                        вперёд может быть много веток, а от конечного числа назад обычно путь почти однозначный.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>4️⃣ Ищете параметр команды — идите от начала к концу</h4>
+                <div class="solution">
+                    <p>Когда сама программа уже дана, никакого перебора не нужно: подставляйте неизвестную буквой
+                        и двигайтесь вперёд по шагам, в конце решая простое уравнение.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>5️⃣ Проверяйте ограничения из условия</h4>
+                <div class="solution">
+                    <p>Если сказано, что число шагов «не более N» — подойдёт любая программа длиной от 1 до N команд.
+                        Если неизвестная ограничена (например, b ≥ 2 и натуральное) — убедитесь, что найденное
+                        значение этому условию удовлетворяет.</p>
+                </div>
+            </div>
+
+            <div class="success">
+                <h3>✅ Алгоритм решения любой задачи этой темы</h3>
+                <ol>
+                    <li>Определите, что неизвестно — программа или параметр команды</li>
+                    <li>Если ищете программу: распишите обратные операции и двигайтесь от конечного числа к
+                        начальному, затем разверните цепочку</li>
+                    <li>Если ищете параметр: пройдите по данной программе вперёд, оставив параметр буквой, и
+                        составьте уравнение</li>
+                    <li>Проверьте полученный ответ подстановкой в исходную программу от начала до конца</li>
+                    <li>Убедитесь, что ответ удовлетворяет всем ограничениям из условия</li>
+                </ol>
+            </div>
+        </section>
+    </main>
+
+    <a href="#" id="backToTop" class="back-to-top" title="Вернуться в начало">↑</a>
+</div>
+
+<style>
+    .back-to-top {
+        display: none;
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: #3498db;
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 50px;
+        font-size: 24px;
+        text-decoration: none;
+        cursor: pointer;
+        z-index: 999;
+        transition: all 0.3s ease;
+    }
+
+    .back-to-top.visible {
+        display: block;
+    }
+
+    .back-to-top:hover {
+        background: #2980b9;
+        transform: translateY(-5px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .section ul {
+        margin-left: 20px;
+        margin-top: 10px;
+    }
+
+    .section ul li {
+        margin-bottom: 8px;
+        line-height: 1.7;
+    }
+
+    .section ol {
+        margin-left: 20px;
+        margin-top: 10px;
+    }
+
+    .section ol li {
+        margin-bottom: 10px;
+        line-height: 1.7;
+    }
+
+    /* === NUMBER CHAIN DIAGRAM === */
+    .chain {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin: 20px 0;
+        padding: 10px;
+    }
+
+    .chain-num {
+        background: #ffffff;
+        border: 2px solid var(--primary);
+        border-radius: 12px;
+        padding: 10px 18px;
+        font-weight: bold;
+        font-size: 1.3em;
+        color: var(--secondary);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .chain-num.start {
+        border-color: var(--success);
+        background: #eafaf1;
+        color: #1e8449;
+    }
+
+    .chain-num.finish {
+        border-color: #e74c3c;
+        background: #fdecea;
+        color: #c0392b;
+    }
+
+    .chain-arrow {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 0.8em;
+        color: var(--text-muted);
+        white-space: nowrap;
+    }
+
+    .chain-arrow .arrow-line {
+        font-size: 1.5em;
+        color: var(--primary);
+        line-height: 1;
+    }
+</style>
+
+<script>
+    const backToTop = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+            backToTop.classList.add('visible');
+        } else {
+            backToTop.classList.remove('visible');
+        }
+    });
+
+    document.getElementById('backToTop').addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    window.addEventListener('scroll', function() {
+        const sections = document.querySelectorAll('.section');
+        const navLinks = document.querySelectorAll('.nav a');
+
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (pageYOffset >= sectionTop - 200) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.style.background = '';
+            if (link.getAttribute('href') === '#' + current) {
+                link.style.background = '#3498db';
+            }
+        });
+    });
+</script>
+</body>
+</html>

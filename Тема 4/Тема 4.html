@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тема 4. Формальные описания реальных объектов и процессов</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<div class="container">
+    <header class="header">
+        <h1><span class="emoji">🗺️</span>Формальные описания реальных объектов и процессов</h1>
+        <p>Таблицы расстояний, графы дорог и поиск кратчайшего пути — решаем визуально, без программирования</p>
+    </header>
+
+    <nav class="nav">
+        <ul>
+            <li><a href="#theory">📐 Теория</a></li>
+            <li><a href="#method">🧭 Визуальный метод решения</a></li>
+            <li><a href="#example">🎯 Разбор примера</a></li>
+            <li><a href="#explanation">💡 Пояснения</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <section id="theory" class="section">
+            <h2><span class="emoji">📐</span>Таблица — это граф, записанный по-другому</h2>
+
+            <p>В таких заданиях реальный объект (сеть дорог, схема соединений, карта населённых пунктов) описывается
+                <strong>формально</strong> — в виде таблицы чисел. Таблица — это просто другая форма записи
+                <strong>графа</strong>: населённые пункты становятся вершинами, а дороги между ними — рёбрами с
+                весом (длиной, стоимостью, временем и т.д.).</p>
+
+            <div class="example-box">
+                <h4>Как устроена такая таблица</h4>
+                <ul>
+                    <li>Строки и столбцы озаглавлены одинаковыми буквами — названиями пунктов (A, B, C, D, E, F…)</li>
+                    <li>На пересечении строки <strong>X</strong> и столбца <strong>Y</strong> стоит длина дороги
+                        между пунктами X и Y</li>
+                    <li><strong>Пустая клетка</strong> означает, что прямой дороги между этими пунктами
+                        <strong>нет</strong> (а не ноль!)</li>
+                    <li>Таблица <strong>симметрична</strong> относительно главной диагонали: клетка [A][B] всегда
+                        равна клетке [B][A], так как дорога ведёт в обе стороны</li>
+                    <li>Диагональ (клетки вида [A][A]) закрашена серым и не используется — расстояние от пункта до
+                        самого себя не нужно</li>
+                </ul>
+            </div>
+
+            <div class="success">
+                <strong>💡 Главная идея:</strong> прежде чем решать, перерисуйте таблицу в виде графа — кружки
+                (пункты) и линии (дороги) с подписанными числами. Так гораздо проще увидеть маршруты, чем смотреть
+                на таблицу чисел.
+            </div>
+        </section>
+
+        <section id="method" class="section">
+            <h2><span class="emoji">🧭</span>Визуальный метод решения</h2>
+
+            <p>Все задания этой темы — лёгкие и решаются <strong>без программирования</strong>, простым перебором
+                маршрутов на глаз. Достаточно действовать по шагам.</p>
+
+            <div class="task-card">
+                <h4>1️⃣ Переведите таблицу в граф</h4>
+                <div class="solution">
+                    <p>Нарисуйте вершины (можно просто буквами по кругу) и соедините линиями только те пары, где в
+                        таблице стоит число. Подпишите над каждой линией её длину.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>2️⃣ Выпишите все рёбра, выходящие из каждой вершины</h4>
+                <div class="solution">
+                    <p>Это удобно сделать прямо по строке таблицы: «из A можно попасть в B (10) и в D (3)» и т.д.
+                        Так вы не забудете ни одного соединения во время перебора.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>3️⃣ Переберите маршруты от старта до финиша</h4>
+                <div class="solution">
+                    <p>Двигайтесь по графу от начального пункта, пробуя все рёбра, и записывайте каждый маршрут до
+                        конечного пункта. Если в условии сказано «каждый пункт можно посетить только один раз» —
+                        вершины в маршруте не должны повторяться.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>4️⃣ Учтите дополнительное условие «через пункт X»</h4>
+                <div class="solution">
+                    <p>Это значит, что вершина X должна просто встретиться где-то внутри маршрута — необязательно
+                        прямо перед финишем. Отбросьте маршруты, где X не встречается.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>5️⃣ Сравните длины всех найденных маршрутов</h4>
+                <div class="solution">
+                    <p>Сложите длины рёбер каждого подходящего маршрута и выберите минимальную сумму — это и есть
+                        ответ.</p>
+                </div>
+            </div>
+
+            <div class="warning">
+                <strong>📌 Важно:</strong> не ограничивайтесь самым очевидным «прямым» маршрутом — обходной путь
+                через другие пункты иногда оказывается короче за счёт того, что отдельные дороги короче прямой.
+            </div>
+        </section>
+
+        <section id="example" class="section">
+            <h2><span class="emoji">🎯</span>Разбор примера</h2>
+
+            <h3>Условие задачи</h3>
+
+            <p>Между населёнными пунктами A, B, C, D, E, F построены дороги, протяжённость которых (в километрах)
+                приведена в таблице.</p>
+
+            <div class="table-container">
+                <table style="text-align: center; max-width: 480px; margin: 20px auto;">
+                    <thead>
+                    <tr>
+                        <th style="background: #e9ecef;"></th>
+                        <th>A</th>
+                        <th>B</th>
+                        <th>C</th>
+                        <th>D</th>
+                        <th>E</th>
+                        <th>F</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th>A</th>
+                        <td style="background: #e9ecef;"></td>
+                        <td>10</td>
+                        <td></td>
+                        <td>3</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>B</th>
+                        <td>10</td>
+                        <td style="background: #e9ecef;"></td>
+                        <td></td>
+                        <td>10</td>
+                        <td>2</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <th>C</th>
+                        <td></td>
+                        <td></td>
+                        <td style="background: #e9ecef;"></td>
+                        <td>2</td>
+                        <td></td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <th>D</th>
+                        <td>3</td>
+                        <td>10</td>
+                        <td>2</td>
+                        <td style="background: #e9ecef;"></td>
+                        <td>4</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>E</th>
+                        <td></td>
+                        <td>2</td>
+                        <td></td>
+                        <td>4</td>
+                        <td style="background: #e9ecef;"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>F</th>
+                        <td></td>
+                        <td>1</td>
+                        <td>4</td>
+                        <td></td>
+                        <td></td>
+                        <td style="background: #e9ecef;"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p><strong>Определите длину кратчайшего пути между пунктами A и F, проходящего через пункт B.</strong>
+                Передвигаться можно только по дорогам, указанным в таблице. Каждый пункт можно посетить только один
+                раз.</p>
+
+            <h3>Шаг 1. Переводим таблицу в граф</h3>
+
+            <p>По таблице видно, какие пункты соединены дорогами напрямую. Нарисуем граф: вершины — пункты,
+                рёбра — дороги с подписанной длиной.</p>
+
+            <div style="text-align: center; margin: 20px 0;">
+                <svg viewBox="0 0 400 400" width="100%" style="max-width: 420px; display: block; margin: 0 auto;">
+                    <line x1="200" y1="50" x2="330" y2="125" stroke="#95a5a6" stroke-width="2"></line>
+                    <line x1="330" y1="125" x2="200" y2="350" stroke="#95a5a6" stroke-width="2"></line>
+                    <line x1="330" y1="125" x2="70" y2="125" stroke="#95a5a6" stroke-width="2"></line>
+                    <line x1="330" y1="275" x2="200" y2="350" stroke="#95a5a6" stroke-width="2"></line>
+
+                    <path d="M 200 50 Q 290 200 200 350" fill="none" stroke="#e74c3c" stroke-width="4"></path>
+                    <path d="M 330 125 Q 200 110 70 275" fill="none" stroke="#e74c3c" stroke-width="4"></path>
+                    <line x1="200" y1="350" x2="70" y2="275" stroke="#e74c3c" stroke-width="4"></line>
+                    <line x1="330" y1="125" x2="70" y2="125" stroke="#e74c3c" stroke-width="4"></line>
+
+                    <path d="M 330 275 Q 200 290 70 125" fill="none" stroke="#95a5a6" stroke-width="2"></path>
+
+                    <text x="265" y="82" font-size="16" font-weight="bold" fill="#2c3e50" style="paint-order: stroke; stroke: white; stroke-width: 4px;">10</text>
+                    <text x="265" y="233" font-size="16" font-weight="bold" fill="#2c3e50" style="paint-order: stroke; stroke: white; stroke-width: 4px;">10</text>
+                    <text x="190" y="118" font-size="16" font-weight="bold" fill="#2c3e50" style="paint-order: stroke; stroke: white; stroke-width: 4px;">1</text>
+                    <text x="260" y="308" font-size="16" font-weight="bold" fill="#2c3e50" style="paint-order: stroke; stroke: white; stroke-width: 4px;">2</text>
+                    <text x="245" y="200" font-size="16" font-weight="bold" fill="#2c3e50" style="paint-order: stroke; stroke: white; stroke-width: 4px;">3</text>
+                    <text x="180" y="155" font-size="16" font-weight="bold" fill="#2c3e50" style="paint-order: stroke; stroke: white; stroke-width: 4px;">2</text>
+                    <text x="180" y="245" font-size="16" font-weight="bold" fill="#2c3e50" style="paint-order: stroke; stroke: white; stroke-width: 4px;">4</text>
+                    <text x="125" y="308" font-size="16" font-weight="bold" fill="#2c3e50" style="paint-order: stroke; stroke: white; stroke-width: 4px;">4</text>
+
+                    <circle cx="200" cy="50" r="22" fill="#d4edda" stroke="#27ae60" stroke-width="3"></circle>
+                    <text x="200" y="56" font-size="18" font-weight="bold" text-anchor="middle" fill="#1e7e34">A</text>
+
+                    <circle cx="330" cy="125" r="22" fill="#fff3cd" stroke="#f39c12" stroke-width="3"></circle>
+                    <text x="330" y="131" font-size="18" font-weight="bold" text-anchor="middle" fill="#8a5a00">B</text>
+
+                    <circle cx="330" cy="275" r="22" fill="white" stroke="#3498db" stroke-width="2"></circle>
+                    <text x="330" y="281" font-size="18" font-weight="bold" text-anchor="middle" fill="#2c3e50">C</text>
+
+                    <circle cx="200" cy="350" r="22" fill="white" stroke="#3498db" stroke-width="2"></circle>
+                    <text x="200" y="356" font-size="18" font-weight="bold" text-anchor="middle" fill="#2c3e50">D</text>
+
+                    <circle cx="70" cy="275" r="22" fill="white" stroke="#3498db" stroke-width="2"></circle>
+                    <text x="70" y="281" font-size="18" font-weight="bold" text-anchor="middle" fill="#2c3e50">E</text>
+
+                    <circle cx="70" cy="125" r="22" fill="#f8d7da" stroke="#e74c3c" stroke-width="3"></circle>
+                    <text x="70" y="131" font-size="18" font-weight="bold" text-anchor="middle" fill="#8b0000">F</text>
+                </svg>
+                <p style="color: #7f8c8d; font-size: 0.95em;">
+                    <span style="color:#27ae60; font-weight:bold;">●</span> A — старт,
+                    <span style="color:#f39c12; font-weight:bold;">●</span> B — обязательный пункт,
+                    <span style="color:#e74c3c; font-weight:bold;">●</span> F — финиш,
+                    красная линия — кратчайший маршрут
+                </p>
+            </div>
+
+            <h3>Шаг 2. Выписываем рёбра из таблицы</h3>
+
+            <div class="example-box">
+                <ul>
+                    <li>A — B (10), A — D (3)</li>
+                    <li>B — A (10), B — D (10), B — E (2), B — F (1)</li>
+                    <li>C — D (2), C — F (4)</li>
+                    <li>D — A (3), D — B (10), D — C (2), D — E (4)</li>
+                    <li>E — B (2), E — D (4)</li>
+                    <li>F — B (1), F — C (4)</li>
+                </ul>
+            </div>
+
+            <h3>Шаг 3. Перебираем маршруты из A в F, обязательно через B</h3>
+
+            <p>Двигаемся по графу из A, пробуем разные пути, не повторяя вершины, пока не дойдём до F. Отбираем
+                только те маршруты, где встречается B:</p>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Маршрут</th>
+                        <th>Вычисление</th>
+                        <th>Длина</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>A → B → F</td>
+                        <td>10 + 1</td>
+                        <td>11</td>
+                    </tr>
+                    <tr>
+                        <td>A → D → B → F</td>
+                        <td>3 + 10 + 1</td>
+                        <td>14</td>
+                    </tr>
+                    <tr style="background: #d4edda;">
+                        <td><strong>A → D → E → B → F</strong></td>
+                        <td>3 + 4 + 2 + 1</td>
+                        <td><strong>10</strong></td>
+                    </tr>
+                    <tr>
+                        <td>A → B → D → C → F</td>
+                        <td>10 + 10 + 2 + 4</td>
+                        <td>26</td>
+                    </tr>
+                    <tr>
+                        <td>A → B → E → D → C → F</td>
+                        <td>10 + 2 + 4 + 2 + 4</td>
+                        <td>22</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="success">
+                <strong>✅ Ответ:</strong> кратчайший путь — <strong>A → D → E → B → F</strong>, его длина
+                <strong>10 км</strong>. Он короче, чем «очевидный» прямой путь A → B → F (11 км), потому что обход
+                через D и E экономит на дорогом ребре A—B.
+            </div>
+
+            <div class="warning">
+                <strong>📌 Для сравнения:</strong> если бы в задаче не было условия «через B», кратчайшим путём из
+                A в F оказался бы маршрут <strong>A → D → C → F</strong> длиной 3 + 2 + 4 = <strong>9 км</strong> —
+                он вообще не проходит через B. Это показывает, почему дополнительное условие важно проверять
+                отдельно, а не полагаться на «кратчайший путь вообще».
+            </div>
+        </section>
+
+        <section id="explanation" class="section">
+            <h2><span class="emoji">💡</span>Ключевые моменты при решении</h2>
+
+            <div class="task-card">
+                <h4>1️⃣ Пустая клетка ≠ ноль</h4>
+                <div class="solution">
+                    <p>Пустая клетка в таблице означает отсутствие прямой дороги. Нулевой длины рёбер в таких
+                        задачах не бывает.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>2️⃣ Проверяйте симметрию таблицы</h4>
+                <div class="solution">
+                    <p>Клетка [X][Y] всегда должна совпадать с клеткой [Y][X]. Если заполнена только половина
+                        таблицы — переносите значения на симметричные позиции, прежде чем рисовать граф.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>3️⃣ «Через пункт» — не значит «сразу перед финишем»</h4>
+                <div class="solution">
+                    <p>Нужный пункт может находиться в любом месте маршрута, лишь бы он там встретился хотя бы
+                        один раз.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>4️⃣ «Каждый пункт только один раз»</h4>
+                <div class="solution">
+                    <p>Это условие запрещает возвращаться в уже пройденную вершину. При переборе сразу отбрасывайте
+                        маршруты с повторами — это сильно сокращает количество вариантов.</p>
+                </div>
+            </div>
+
+            <div class="success">
+                <h3>✅ Алгоритм решения любой задачи этой темы</h3>
+                <ol>
+                    <li>Перерисуйте таблицу в виде графа с подписанными весами рёбер</li>
+                    <li>Выпишите соединения для каждой вершины по строкам таблицы</li>
+                    <li>Переберите все маршруты от старта до финиша без повторения вершин</li>
+                    <li>Оставьте только маршруты, удовлетворяющие дополнительному условию (например, «через B»)</li>
+                    <li>Сравните длины и выберите минимальную — это и есть ответ</li>
+                </ol>
+            </div>
+        </section>
+    </main>
+
+    <a href="#" id="backToTop" class="back-to-top" title="Вернуться в начало">↑</a>
+</div>
+
+<style>
+    .back-to-top {
+        display: none;
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: #3498db;
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 50px;
+        font-size: 24px;
+        text-decoration: none;
+        cursor: pointer;
+        z-index: 999;
+        transition: all 0.3s ease;
+    }
+
+    .back-to-top.visible {
+        display: block;
+    }
+
+    .back-to-top:hover {
+        background: #2980b9;
+        transform: translateY(-5px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .section ul {
+        margin-left: 20px;
+        margin-top: 10px;
+    }
+
+    .section ul li {
+        margin-bottom: 8px;
+        line-height: 1.7;
+    }
+
+    .section ol {
+        margin-left: 20px;
+        margin-top: 10px;
+    }
+
+    .section ol li {
+        margin-bottom: 10px;
+        line-height: 1.7;
+    }
+</style>
+
+<script>
+    const backToTop = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+            backToTop.classList.add('visible');
+        } else {
+            backToTop.classList.remove('visible');
+        }
+    });
+
+    document.getElementById('backToTop').addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    window.addEventListener('scroll', function() {
+        const sections = document.querySelectorAll('.section');
+        const navLinks = document.querySelectorAll('.nav a');
+
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (pageYOffset >= sectionTop - 200) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.style.background = '';
+            if (link.getAttribute('href') === '#' + current) {
+                link.style.background = '#3498db';
+            }
+        });
+    });
+</script>
+</body>
+</html>
