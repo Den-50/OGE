@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тема 3. Значение логического выражения</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<div class="container">
+    <header class="header">
+        <h1><span class="emoji">⚖️</span>Значение логического выражения</h1>
+        <p>Операции И, ИЛИ, НЕ, упрощение выражений и подбор чисел — решаем визуально, без программирования</p>
+    </header>
+
+    <nav class="nav">
+        <ul>
+            <li><a href="#theory">📐 Теория: операции</a></li>
+            <li><a href="#simplification">✂️ Упрощение выражений</a></li>
+            <li><a href="#method">🔧 Метод решения</a></li>
+            <li><a href="#example1">🎯 Пример 1: ЛОЖНО</a></li>
+            <li><a href="#example2">🎯 Пример 2: ИСТИННО</a></li>
+            <li><a href="#explanation">💡 Ключевые моменты</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <section id="theory" class="section">
+            <h2><span class="emoji">📐</span>Логические операции И, ИЛИ, НЕ</h2>
+
+            <p><strong>Высказывание</strong> — это утверждение, про которое можно точно сказать, истинно оно
+                (<strong>И</strong>) или ложно (<strong>Л</strong>). Например: «Число 12 чётное» — истинно, «15 &gt;
+                20» — ложно. Из простых высказываний с помощью логических операций строятся сложные.</p>
+
+            <div class="example-box">
+                <h4>НЕ — отрицание</h4>
+                <p>Меняет значение высказывания на противоположное: истина становится ложью, ложь — истиной.</p>
+                <div class="table-container">
+                    <table style="max-width: 320px; margin: 15px auto; text-align: center;">
+                        <thead>
+                        <tr><th>A</th><th>НЕ A</th></tr>
+                        </thead>
+                        <tbody>
+                        <tr><td>И</td><td><strong>Л</strong></td></tr>
+                        <tr><td>Л</td><td><strong>И</strong></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>И — конъюнкция (логическое умножение)</h4>
+                <p>Истинна, только когда <strong>обе</strong> части истинны одновременно. Достаточно одной лжи —
+                и всё выражение ложно.</p>
+                <div class="table-container">
+                    <table style="max-width: 320px; margin: 15px auto; text-align: center;">
+                        <thead>
+                        <tr><th>A</th><th>B</th><th>A И B</th></tr>
+                        </thead>
+                        <tbody>
+                        <tr><td>И</td><td>И</td><td><strong>И</strong></td></tr>
+                        <tr><td>И</td><td>Л</td><td>Л</td></tr>
+                        <tr><td>Л</td><td>И</td><td>Л</td></tr>
+                        <tr><td>Л</td><td>Л</td><td>Л</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>ИЛИ — дизъюнкция (логическое сложение)</h4>
+                <p>Истинна, когда истинна <strong>хотя бы одна</strong> из частей (или обе сразу). Ложна только
+                когда ложны <strong>обе</strong> части.</p>
+                <div class="table-container">
+                    <table style="max-width: 320px; margin: 15px auto; text-align: center;">
+                        <thead>
+                        <tr><th>A</th><th>B</th><th>A ИЛИ B</th></tr>
+                        </thead>
+                        <tbody>
+                        <tr><td>И</td><td>И</td><td><strong>И</strong></td></tr>
+                        <tr><td>И</td><td>Л</td><td><strong>И</strong></td></tr>
+                        <tr><td>Л</td><td>И</td><td><strong>И</strong></td></tr>
+                        <tr><td>Л</td><td>Л</td><td><strong>Л</strong></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="success">
+                <strong>💡 Приоритет операций:</strong> сначала выполняется <strong>НЕ</strong>, затем
+                <strong>И</strong>, и только потом <strong>ИЛИ</strong>. Скобки меняют порядок — как в
+                арифметике. Например, в выражении <span class="code">НЕ A ИЛИ B</span> сначала считается
+                <span class="code">НЕ A</span>, а уже потом результат складывается с B по правилу ИЛИ.
+            </div>
+        </section>
+
+        <section id="simplification" class="section">
+            <h2><span class="emoji">✂️</span>Упрощение выражений: убираем НЕ из формулы</h2>
+
+            <p>Вычислять значение выражения с НЕ напрямую часто неудобно. Гораздо проще сначала
+                <strong>преобразовать</strong> выражение так, чтобы отрицаний не осталось, — и только потом
+                подбирать числа.</p>
+
+            <div class="example-box">
+                <h4>Закон двойного отрицания</h4>
+                <p style="text-align: center; font-size: 1.1em;"><strong>НЕ (НЕ A) = A</strong></p>
+                <p>Два отрицания взаимно уничтожаются — как «не могу не согласиться» означает «согласен».</p>
+            </div>
+
+            <div class="example-box">
+                <h4>Законы де Моргана — НЕ «протаскиваем» внутрь скобок</h4>
+                <p style="text-align: center; font-size: 1.1em;">
+                    <strong>НЕ (A И B) = (НЕ A) ИЛИ (НЕ B)</strong><br>
+                    <strong>НЕ (A ИЛИ B) = (НЕ A) И (НЕ B)</strong>
+                </p>
+                <p>При снятии общего отрицания операция <strong>меняется на противоположную</strong>: И
+                    превращается в ИЛИ, а ИЛИ — в И, и отрицание «переезжает» на каждую часть.</p>
+            </div>
+
+            <div class="example-box">
+                <h4>Отрицание меняет знак сравнения на противоположный</h4>
+                <p>Когда НЕ добирается до простого высказывания со знаком сравнения, знак «переворачивается»,
+                    а отрицание исчезает:</p>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                        <tr><th>Высказывание</th><th>Его отрицание (НЕ)</th></tr>
+                        </thead>
+                        <tbody>
+                        <tr><td><span class="code">x &gt; a</span></td><td><span class="code">x ≤ a</span></td></tr>
+                        <tr><td><span class="code">x ≥ a</span></td><td><span class="code">x &lt; a</span></td></tr>
+                        <tr><td><span class="code">x &lt; a</span></td><td><span class="code">x ≥ a</span></td></tr>
+                        <tr><td><span class="code">x ≤ a</span></td><td><span class="code">x &gt; a</span></td></tr>
+                        <tr><td><span class="code">x = a</span></td><td><span class="code">x ≠ a</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>То же с нечисловыми высказываниями: <strong>НЕ (x чётное) = x нечётное</strong>,
+                    <strong>НЕ (x делится на 3) = x не делится на 3</strong> и т.д.</p>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Частая ошибка:</strong> строгий знак всегда переходит в нестрогий и наоборот, при этом
+                граничное число «переходит на другую сторону»: <span class="code">НЕ (x &gt; 67)</span> — это
+                <span class="code">x ≤ 67</span>, где 67 <strong>входит</strong> в диапазон, а не
+                <span class="code">x &lt; 67</span>. Потерять границу — значит потерять один элемент при подсчёте.
+            </div>
+        </section>
+
+        <section id="method" class="section">
+            <h2><span class="emoji">🔧</span>Метод решения</h2>
+
+            <div class="task-card">
+                <h4>1. Упростите выражение — уберите все НЕ</h4>
+                <div class="solution">
+                    <p>Примените законы де Моргана и двойного отрицания, затем замените отрицания сравнений на
+                        противоположные знаки. В итоге должно остаться выражение без НЕ, только с И/ИЛИ.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>2. Если требуется ЛОЖЬ — работайте с отрицанием</h4>
+                <div class="solution">
+                    <p>«Выражение ложно» = «его отрицание истинно». Часто проще записать отрицание всего
+                        выражения, упростить его по де Моргану и искать числа для истинности уже этой,
+                        перевёрнутой формулы.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>3. Переведите каждую часть на обычный язык</h4>
+                <div class="solution">
+                    <p>Запишите, что должно выполняться: «число больше 50 <strong>и</strong> нечётное» или
+                        «число нечётное <strong>и</strong> не больше 67» и т.д. При <strong>И</strong> должны
+                        выполняться все условия сразу, при <strong>ИЛИ</strong> — хотя бы одно.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>4. Подберите или посчитайте числа</h4>
+                <div class="solution">
+                    <p>Если просят наименьшее/наибольшее число — идите от границы (от 121, от 100 и т.д.) и
+                        проверяйте числа по одному. Если просят количество — выпишите диапазон и посчитайте
+                        элементы по формуле: для арифметической последовательности с шагом 2 (чётные или
+                        нечётные) количество = (последний − первый) ÷ 2 + 1.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="example1" class="section">
+            <h2><span class="emoji">🎯</span>Пример 1: выражение должно быть ЛОЖНО</h2>
+
+            <h3>Условие задачи</h3>
+
+            <div class="warning">
+                <strong>❓ Вопрос:</strong> напишите <strong>наименьшее трёхзначное число, большее 121</strong>,
+                для которого <strong>ЛОЖНО</strong> высказывание:
+                <p style="margin-top: 10px; text-align: center; font-size: 1.1em;">
+                    <strong>НЕ (Число &gt; 50) ИЛИ (Число чётное)</strong>
+                </p>
+            </div>
+
+            <h3>Шаг 1. Переворачиваем задачу: ЛОЖЬ → ИСТИНА отрицания</h3>
+
+            <p>Выражение ложно тогда и только тогда, когда его <strong>отрицание истинно</strong>. Запишем
+                отрицание и упростим его по закону де Моргана (ИЛИ меняется на И, отрицание уходит на каждую
+                часть):</p>
+
+            <div class="example-box">
+                <p style="text-align: center;">
+                    НЕ ( <span class="code">НЕ (Число &gt; 50)</span> ИЛИ <span class="code">Число чётное</span> )<br>
+                    = НЕ ( НЕ (Число &gt; 50) ) <strong>И</strong> НЕ (Число чётное) &nbsp;— де Морган<br>
+                    = <strong>(Число &gt; 50) И (Число нечётное)</strong> &nbsp;— двойное отрицание и снятие НЕ
+                </p>
+            </div>
+
+            <p>Итак, ищем число, которое <strong>одновременно</strong> больше 50 и нечётное — и при этом
+                наименьшее трёхзначное, большее 121.</p>
+
+            <h3>Шаг 2. Идём от границы и проверяем числа по одному</h3>
+
+            <div class="table-container">
+                <table style="max-width: 560px; margin: 20px auto;">
+                    <thead>
+                    <tr>
+                        <th>Число</th>
+                        <th>Больше 121?</th>
+                        <th>Больше 50?</th>
+                        <th>Нечётное?</th>
+                        <th>Подходит?</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>122</td><td>✔</td><td>✔</td><td>✘ (чётное)</td><td>нет</td></tr>
+                    <tr style="background: #d4edda;">
+                        <td><strong>123</strong></td><td>✔</td><td>✔</td><td>✔</td><td><strong>да</strong></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Шаг 3. Проверка по исходному выражению</h3>
+
+            <div class="example-box">
+                <p>Подставим 123: <span class="code">НЕ (123 &gt; 50) ИЛИ (123 чётное)</span> =
+                    <span class="code">НЕ (И) ИЛИ (Л)</span> = <span class="code">Л ИЛИ Л</span> =
+                    <strong>Л</strong> — как и требовалось. ✔</p>
+            </div>
+
+            <div class="success">
+                <strong>✅ Ответ к примеру 1: 123</strong>
+            </div>
+        </section>
+
+        <section id="example2" class="section">
+            <h2><span class="emoji">🎯</span>Пример 2: выражение должно быть ИСТИННО, считаем количество</h2>
+
+            <h3>Условие задачи</h3>
+
+            <div class="warning">
+                <strong>❓ Вопрос:</strong> определите <strong>количество натуральных двузначных чисел</strong>,
+                для которых истинно логическое выражение:
+                <p style="margin-top: 10px; text-align: center; font-size: 1.1em;">
+                    <strong>НЕ (x чётное) И НЕ (x &gt; 67)</strong>
+                </p>
+            </div>
+
+            <h3>Шаг 1. Снимаем отрицания</h3>
+
+            <p>Здесь НЕ стоит прямо перед простыми высказываниями — просто меняем их на противоположные:</p>
+
+            <div class="example-box">
+                <ul>
+                    <li><span class="code">НЕ (x чётное)</span> → <strong>x нечётное</strong></li>
+                    <li><span class="code">НЕ (x &gt; 67)</span> → <strong>x ≤ 67</strong> (строгий знак «&gt;»
+                        переходит в нестрогий «≤», граница 67 входит!)</li>
+                </ul>
+            </div>
+
+            <p>Упрощённое условие: <strong>x нечётное И x ≤ 67</strong>. Операция И значит, что оба условия
+                выполняются одновременно.</p>
+
+            <h3>Шаг 2. Выписываем диапазон</h3>
+
+            <p>Двузначные натуральные числа — от 10 до 99. Из них берём только <strong>нечётные</strong> и
+                только <strong>не больше 67</strong>:</p>
+
+            <div class="example-box">
+                <p style="text-align: center;">11, 13, 15, …, 65, 67</p>
+            </div>
+
+            <h3>Шаг 3. Считаем количество</h3>
+
+            <p>Числа идут с шагом 2 (нечётные). Количество элементов такой последовательности:</p>
+
+            <div class="example-box">
+                <p style="text-align: center;">(67 − 11) ÷ 2 + 1 = 56 ÷ 2 + 1 = 28 + 1 = <strong>29</strong></p>
+            </div>
+
+            <h3>Шаг 4. Проверка другим способом</h3>
+
+            <div class="example-box">
+                <p>Нечётных чисел от 1 до 67 всего (67 + 1) ÷ 2 = 34. Из них однозначные нечётные (1, 3, 5, 7, 9)
+                    — 5 штук, они не двузначные и не считаются: 34 − 5 = <strong>29</strong>. Сошлось. ✔</p>
+            </div>
+
+            <div class="success">
+                <strong>✅ Ответ к примеру 2: 29</strong>
+            </div>
+        </section>
+
+        <section id="explanation" class="section">
+            <h2><span class="emoji">💡</span>Ключевые моменты при решении</h2>
+
+            <div class="task-card">
+                <h4>1. ИЛИ ложно в единственном случае</h4>
+                <div class="solution">
+                    <p>Дизъюнкция ложна, только когда ложны <strong>обе</strong> части. Поэтому «выражение с ИЛИ
+                        ложно» сразу распадается на два условия — по одному на каждую часть.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>2. И истинно в единственном случае</h4>
+                <div class="solution">
+                    <p>Конъюнкция истинна, только когда истинны <strong>обе</strong> части. «Выражение с И
+                        истинно» — это тоже сразу два обязательных условия.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>3. Не теряйте границу при отрицании</h4>
+                <div class="solution">
+                    <p><span class="code">НЕ (x &gt; 67)</span> = <span class="code">x ≤ 67</span> — число 67
+                        включается. Если записать <span class="code">x &lt; 67</span>, ответ будет меньше на
+                        один. Всегда проверяйте граничное число отдельно.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>4. «Больше 121» — само число 121 не берём</h4>
+                <div class="solution">
+                    <p>В условиях вида «наименьшее трёхзначное, большее 121» начинаем проверку со следующего
+                        числа — со 122. А «трёхзначное» напоминает, что ответ должен быть от 100 до 999.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>5. Считайте количество по формуле, а не пальцем</h4>
+                <div class="solution">
+                    <p>Для чётных/нечётных чисел в диапазоне: количество = (последний − первый) ÷ 2 + 1.
+                        Не забудьте <strong>+1</strong> — без него теряется один элемент.</p>
+                </div>
+            </div>
+
+            <div class="success">
+                <h3>✅ Алгоритм решения любой задачи этой темы</h3>
+                <ol>
+                    <li>Упростите выражение: уберите НЕ через двойное отрицание, законы де Моргана и замену знаков сравнения на противоположные</li>
+                    <li>Если требуется ложность — перейдите к отрицанию всего выражения и упростите его</li>
+                    <li>Переведите упрощённое условие на обычный язык («больше 50 и нечётное»)</li>
+                    <li>Подберите нужное число от границы или посчитайте количество чисел в диапазоне по формуле</li>
+                    <li>Подставьте найденное число (или границы диапазона) в исходное выражение и проверьте</li>
+                </ol>
+            </div>
+        </section>
+    </main>
+
+    <a href="#" id="backToTop" class="back-to-top" title="Вернуться в начало">↑</a>
+</div>
+
+<style>
+    .back-to-top {
+        display: none;
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: #3498db;
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        line-height: 1;
+        text-decoration: none;
+        cursor: pointer;
+        z-index: 999;
+        transition: all 0.3s ease;
+    }
+
+    .back-to-top.visible {
+        display: flex;
+    }
+
+    .back-to-top:hover {
+        background: #2980b9;
+        transform: translateY(-5px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .section ul {
+        margin-left: 20px;
+        margin-top: 10px;
+    }
+
+    .section ul li {
+        margin-bottom: 8px;
+        line-height: 1.7;
+    }
+
+    .section ol {
+        margin-left: 20px;
+        margin-top: 10px;
+    }
+
+    .section ol li {
+        margin-bottom: 10px;
+        line-height: 1.7;
+    }
+</style>
+
+<script>
+    const backToTop = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+            backToTop.classList.add('visible');
+        } else {
+            backToTop.classList.remove('visible');
+        }
+    });
+
+    document.getElementById('backToTop').addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    window.addEventListener('scroll', function() {
+        const sections = document.querySelectorAll('.section');
+        const navLinks = document.querySelectorAll('.nav a');
+
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (pageYOffset >= sectionTop - 200) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.style.background = '';
+            if (link.getAttribute('href') === '#' + current) {
+                link.style.background = '#3498db';
+            }
+        });
+    });
+</script>
+</body>
+</html>

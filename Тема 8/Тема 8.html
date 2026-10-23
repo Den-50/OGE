@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тема 8. Запросы для поисковых систем с использованием логических выражений</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<div class="container">
+    <header class="header">
+        <h1><span class="emoji">🔍</span>Запросы для поисковых систем с использованием логических выражений</h1>
+        <p>Круги Эйлера и подсчёт страниц по запросам с И и ИЛИ — решаем визуально, без формул</p>
+    </header>
+
+    <nav class="nav">
+        <ul>
+            <li><a href="#theory">📐 Теория</a></li>
+            <li><a href="#method">🔧 Метод решения</a></li>
+            <li><a href="#example">🎯 Разбор задачи</a></li>
+            <li><a href="#answer">✅ Ответ</a></li>
+            <li><a href="#explanation">💡 Ключевые моменты</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <section id="theory" class="section">
+            <h2><span class="emoji">📐</span>Запросы и круги Эйлера</h2>
+
+            <p>В языке поисковых серверов запросы строятся из слов и двух логических операций:</p>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Символ</th>
+                        <th>Операция</th>
+                        <th>Что находит</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><span class="code">&amp;</span></td>
+                        <td><strong>И</strong></td>
+                        <td>страницы, где есть <strong>оба слова одновременно</strong></td>
+                    </tr>
+                    <tr>
+                        <td><span class="code">|</span></td>
+                        <td><strong>ИЛИ</strong></td>
+                        <td>страницы, где есть <strong>хотя бы одно</strong> из слов</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p>Каждое слово запроса — это <strong>множество страниц</strong>, на которых оно встречается. Удобно
+                рисовать такие множества <strong>кругами Эйлера</strong>: один круг — одно слово, внутри круга —
+                все страницы с этим словом.</p>
+
+            <div class="example-box">
+                <h4>Как операции выглядят на кругах</h4>
+                <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin: 15px 0;">
+                    <div style="text-align: center;">
+                        <svg viewBox="0 0 320 200" width="260" style="max-width: 100%; height: auto;">
+                            <defs>
+                                <pattern id="hatchAnd" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">
+                                    <line x1="0" y1="0" x2="0" y2="8" stroke="#8e44ad" stroke-width="2"></line>
+                                </pattern>
+                            </defs>
+                            <circle cx="110" cy="100" r="70" fill="#ffffff" stroke="#3498db" stroke-width="2.5"></circle>
+                            <circle cx="210" cy="100" r="70" fill="#ffffff" stroke="#e67e22" stroke-width="2.5"></circle>
+                            <path d="M 160 51 A 70 70 0 0 1 160 149 A 70 70 0 0 1 160 51 Z" fill="url(#hatchAnd)"></path>
+                            <circle cx="110" cy="100" r="70" fill="none" stroke="#3498db" stroke-width="2.5"></circle>
+                            <circle cx="210" cy="100" r="70" fill="none" stroke="#e67e22" stroke-width="2.5"></circle>
+                            <text x="66" y="105" font-size="17" font-weight="bold" fill="#2980b9" text-anchor="middle">А</text>
+                            <text x="254" y="105" font-size="17" font-weight="bold" fill="#d35400" text-anchor="middle">Б</text>
+                        </svg>
+                        <p style="margin-top: 5px;"><span class="code">А &amp; Б</span> — <strong>пересечение</strong>: заштрихована только общая часть кругов</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <svg viewBox="0 0 320 200" width="260" style="max-width: 100%; height: auto;">
+                            <defs>
+                                <pattern id="hatchOr" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">
+                                    <line x1="0" y1="0" x2="0" y2="8" stroke="#3498db" stroke-width="2"></line>
+                                </pattern>
+                            </defs>
+                            <circle cx="110" cy="100" r="70" fill="url(#hatchOr)" stroke="#3498db" stroke-width="2.5"></circle>
+                            <circle cx="210" cy="100" r="70" fill="url(#hatchOr)" stroke="#e67e22" stroke-width="2.5"></circle>
+                            <circle cx="110" cy="100" r="70" fill="none" stroke="#3498db" stroke-width="2.5"></circle>
+                            <circle cx="210" cy="100" r="70" fill="none" stroke="#e67e22" stroke-width="2.5"></circle>
+                            <text x="66" y="105" font-size="17" font-weight="bold" fill="#2980b9" text-anchor="middle">А</text>
+                            <text x="254" y="105" font-size="17" font-weight="bold" fill="#d35400" text-anchor="middle">Б</text>
+                        </svg>
+                        <p style="margin-top: 5px;"><span class="code">А | Б</span> — <strong>объединение</strong>: заштриховано всё, что есть хотя бы в одном круге</p>
+                    </div>
+                </div>
+                <ul>
+                    <li><strong>А &amp; Б</strong> — <strong>пересечение</strong> кругов: только общая часть,
+                        «линза» на пересечении А и Б</li>
+                    <li><strong>А | Б</strong> — <strong>объединение</strong> кругов: всё, что закрашено хотя бы в
+                        одном круге</li>
+                    <li>Если слов три — рисуем три круга, и они делят картинку на <strong>7 областей</strong>:
+                        три «только одно слово», три «ровно два слова» и одна центральная «все три слова
+                        сразу»</li>
+                </ul>
+            </div>
+
+            <div class="success">
+                <strong>💡 Главная идея:</strong> области, на которые круги делят рисунок, <strong>не пересекаются
+                    друг с другом</strong>. Поэтому количество страниц для любого запроса — это просто
+                <strong>сумма чисел в соответствующих областях</strong>. А значит, неизвестные области можно
+                находить обычным <strong>вычитанием</strong> — никаких специальных формул не нужно.
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Важно для самопроверки:</strong> чем больше слов соединено через
+                <span class="code">&amp;</span>, тем <strong>меньше</strong> страниц найдено; чем больше слов
+                через <span class="code">|</span> — тем <strong>больше</strong>. Например, всегда верно:
+                <span class="code">А &amp; Б &amp; В ≤ А &amp; Б ≤ А &amp; (Б | В) ≤ А</span>.
+            </div>
+        </section>
+
+        <section id="method" class="section">
+            <h2><span class="emoji">🔧</span>Метод решения</h2>
+
+            <div class="task-card">
+                <h4>1. Нарисуйте круги — по одному на каждое слово</h4>
+                <div class="solution">
+                    <p>Два слова — два круга (3 области), три слова — три круга (7 областей). Подпишите каждый
+                        круг словом из запроса.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>2. Пронумеруйте все области</h4>
+                <div class="solution">
+                    <p>Каждой отдельной «дольке» рисунка дайте свой номер: X₁, X₂, … Область не должна
+                        пересекаться с соседними — это кусочки, на которые круги режут картинку.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>3. Запишите каждый запрос из таблицы как сумму областей</h4>
+                <div class="solution">
+                    <p>Посмотрите, какие области закрывает запрос: для <span class="code">&amp;</span> берётся
+                        только общая часть кругов, для <span class="code">|</span> — всё объединение. Приравняйте
+                        сумму областей к числу страниц из таблицы.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>4. Так же запишите искомый запрос</h4>
+                <div class="solution">
+                    <p>Выразите запрос, который нужно найти, через номера областей — обычно это сумма двух-трёх
+                        областей.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>5. Найдите неизвестные области вычитанием</h4>
+                <div class="solution">
+                    <p>Начинайте с самого «маленького» запроса (обычно тройного пересечения — оно равно одной
+                        области). Вычитайте известные части из больших сумм, пока не получите нужную комбинацию
+                        областей.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="example" class="section">
+            <h2><span class="emoji">🎯</span>Разбор задачи</h2>
+
+            <h3>Условие задачи</h3>
+
+            <p>В языке запросов поискового сервера для обозначения логической операции «ИЛИ» используется символ
+                <span class="code">|</span>, а для обозначения логической операции «И» — символ
+                <span class="code">&amp;</span>. В таблице приведены запросы и количество найденных по ним
+                страниц некоторого сегмента сети Интернет:</p>
+
+            <div class="table-container">
+                <table style="max-width: 560px; margin: 20px auto;">
+                    <thead>
+                    <tr>
+                        <th>Запрос</th>
+                        <th>Найдено страниц (в тысячах)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>Хоккей &amp; Россия</td><td>294</td></tr>
+                    <tr><td>Хоккей &amp; Россия &amp; Канада</td><td>78</td></tr>
+                    <tr><td>Хоккей &amp; (Россия | Канада)</td><td>452</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="warning">
+                <strong>❓ Вопрос:</strong> какое количество страниц (в тысячах) будет найдено по запросу
+                <strong>Хоккей &amp; Канада</strong>? Считается, что все запросы выполнялись практически
+                одновременно, так что набор страниц, содержащих все искомые слова, не изменялся за время
+                выполнения запросов.
+            </div>
+
+            <h3>Шаг 1. Рисуем три круга и нумеруем области</h3>
+
+            <p>Три слова — три круга: <strong>Хоккей</strong>, <strong>Россия</strong>, <strong>Канада</strong>.
+                Они делят рисунок на 7 областей, пронумеруем их X₁–X₇:</p>
+
+            <div style="text-align: center; margin: 20px 0;">
+                <svg viewBox="0 0 480 350" width="100%" style="max-width: 480px; display: block; margin: 0 auto;">
+                    <circle cx="180" cy="130" r="90" fill="#3498db" fill-opacity="0.07" stroke="#3498db" stroke-width="2.5"></circle>
+                    <circle cx="300" cy="130" r="90" fill="#e67e22" fill-opacity="0.07" stroke="#e67e22" stroke-width="2.5"></circle>
+                    <circle cx="240" cy="235" r="90" fill="#27ae60" fill-opacity="0.07" stroke="#27ae60" stroke-width="2.5"></circle>
+
+                    <text x="100" y="42" font-size="16" font-weight="bold" fill="#2980b9" text-anchor="middle">Хоккей</text>
+                    <text x="380" y="42" font-size="16" font-weight="bold" fill="#d35400" text-anchor="middle">Россия</text>
+                    <text x="240" y="345" font-size="16" font-weight="bold" fill="#1e8449" text-anchor="middle">Канада</text>
+
+                    <text x="135" y="121" font-size="17" font-weight="bold" fill="#2c3e50" text-anchor="middle">1</text>
+                    <text x="345" y="121" font-size="17" font-weight="bold" fill="#2c3e50" text-anchor="middle">2</text>
+                    <text x="240" y="106" font-size="17" font-weight="bold" fill="#2c3e50" text-anchor="middle">4</text>
+                    <text x="240" y="174" font-size="17" font-weight="bold" fill="#2c3e50" text-anchor="middle">5</text>
+                    <text x="192" y="201" font-size="17" font-weight="bold" fill="#2c3e50" text-anchor="middle">6</text>
+                    <text x="288" y="201" font-size="17" font-weight="bold" fill="#2c3e50" text-anchor="middle">7</text>
+                    <text x="240" y="284" font-size="17" font-weight="bold" fill="#2c3e50" text-anchor="middle">3</text>
+                </svg>
+                <p style="color: #7f8c8d; font-size: 0.95em;">X₁ — только Хоккей, X₂ — только Россия, X₃ — только
+                    Канада, X₄ — Хоккей и Россия (без Канады), X₅ — все три слова, X₆ — Хоккей и Канада (без
+                    России), X₇ — Россия и Канада (без Хоккея)</p>
+            </div>
+
+            <h3>Шаг 2. Записываем каждый запрос как сумму областей</h3>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Запрос</th>
+                        <th>Какие области покрывает</th>
+                        <th>Страниц (тыс.)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Хоккей &amp; Россия</td>
+                        <td>X₄ + X₅</td>
+                        <td>294</td>
+                    </tr>
+                    <tr>
+                        <td>Хоккей &amp; Россия &amp; Канада</td>
+                        <td>X₅</td>
+                        <td>78</td>
+                    </tr>
+                    <tr>
+                        <td>Хоккей &amp; (Россия | Канада)</td>
+                        <td>X₄ + X₅ + X₆</td>
+                        <td>452</td>
+                    </tr>
+                    <tr style="background: #d4edda;">
+                        <td><strong>Хоккей &amp; Канада — ?</strong></td>
+                        <td><strong>X₅ + X₆</strong></td>
+                        <td><strong>?</strong></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="example-box">
+                <h4>Почему именно такие области</h4>
+                <ul>
+                    <li><strong>Хоккей &amp; Россия</strong> — всё общее между кругами Хоккей и Россия: это «чистая»
+                        линза X₄ плюс центр X₅</li>
+                    <li><strong>Хоккей &amp; Россия &amp; Канада</strong> — только центральная область X₅, где
+                        встречаются все три слова</li>
+                    <li><strong>Хоккей &amp; (Россия | Канада)</strong> — из круга Хоккей берём всё, что
+                        пересекается хотя бы с одним из кругов Россия/Канада: X₄ + X₅ + X₆</li>
+                    <li><strong>Хоккей &amp; Канада</strong> — общая часть кругов Хоккей и Канада: линза X₆ плюс
+                        центр X₅</li>
+                </ul>
+            </div>
+
+            <h3>Шаг 3. Находим неизвестные области вычитанием</h3>
+
+            <div class="example-box">
+                <p><strong>X₅ = 78</strong> — известна сразу из второй строки таблицы.</p>
+                <p>Из первой строки: X₄ + X₅ = 294, поэтому<br>
+                    <strong>X₄ = 294 − 78 = 216</strong>.</p>
+                <p>Из третьей строки: X₄ + X₅ + X₆ = 452, поэтому<br>
+                    <strong>X₅ + X₆ = 452 − X₄ = 452 − 216 = 236</strong>.</p>
+            </div>
+
+            <p>А X₅ + X₆ — это ровно то, что мы искали: запрос <strong>Хоккей &amp; Канада</strong>. Саму область
+                X₆ отдельно находить даже не потребовалось!</p>
+
+            <h3>Шаг 4. Самопроверка порядком чисел</h3>
+
+            <div class="example-box">
+                <p>Должно выполняться: Хоккей &amp; Россия &amp; Канада (78) ≤ Хоккей &amp; Канада (236) ≤ Хоккей
+                    &amp; (Россия | Канада) (452). Верно: 78 &lt; 236 &lt; 452. ✔</p>
+            </div>
+        </section>
+
+        <section id="answer" class="section">
+            <h2><span class="emoji">✅</span>Ответ</h2>
+
+            <div class="success">
+                <h4>✅ Ответ: 236</h4>
+                <p>По запросу <strong>Хоккей &amp; Канада</strong> будет найдено <strong>236</strong> тысяч
+                    страниц: это области X₅ + X₆ = 452 − (294 − 78) = 236.</p>
+            </div>
+        </section>
+
+        <section id="explanation" class="section">
+            <h2><span class="emoji">💡</span>Ключевые моменты при решении</h2>
+
+            <div class="task-card">
+                <h4>1. Каждый запрос — сумма целых областей</h4>
+                <div class="solution">
+                    <p>Области не пересекаются, поэтому их количества просто складываются. Если запрос «не
+                        складывается» из целых областей — вы неверно определили, какую часть рисунка он
+                        покрывает.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>2. Начинайте с самого узкого запроса</h4>
+                <div class="solution">
+                    <p>Запрос с наибольшим числом <span class="code">&amp;</span> обычно равен одной-единственной
+                        области (центру картинки). От него удобно «откусывать» известные куски от больших
+                        запросов.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>3. Скобки в запросе важны</h4>
+                <div class="solution">
+                    <p><span class="code">Хоккей &amp; (Россия | Канада)</span> и <span class="code">(Хоккей &amp;
+                        Россия) | Канада</span> — разные запросы с разными областями. Сначала определяйте, что в
+                        скобках, и лишь потом соединяйте с остальным.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>4. Не нужно искать каждую область по отдельности</h4>
+                <div class="solution">
+                    <p>Часто искомый запрос получается вычитанием из целого куска, без нахождения всех X по
+                        отдельности — как в нашей задаче, где X₅ + X₆ нашлось одним действием.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>5. Проверяйте ответ неравенством</h4>
+                <div class="solution">
+                    <p>Больше условий через <span class="code">&amp;</span> — меньше страниц. Если ваш ответ
+                        оказался больше, чем более «широкий» запрос из таблицы, — в вычислениях ошибка.</p>
+                </div>
+            </div>
+
+            <div class="success">
+                <h3>✅ Алгоритм решения любой задачи этой темы</h3>
+                <ol>
+                    <li>Нарисуйте круги Эйлера — по кругу на каждое слово запроса</li>
+                    <li>Пронумеруйте все непересекающиеся области</li>
+                    <li>Запишите каждый известный запрос из таблицы как сумму областей и приравняйте к числу страниц</li>
+                    <li>Запишите искомый запрос как сумму областей</li>
+                    <li>Вычитайте известные части из сумм, пока не получите искомую комбинацию</li>
+                    <li>Проверьте: у более «узкого» запроса страниц должно быть меньше</li>
+                </ol>
+            </div>
+        </section>
+    </main>
+
+    <a href="#" id="backToTop" class="back-to-top" title="Вернуться в начало">↑</a>
+</div>
+
+<style>
+    .back-to-top {
+        display: none;
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: #3498db;
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        line-height: 1;
+        text-decoration: none;
+        cursor: pointer;
+        z-index: 999;
+        transition: all 0.3s ease;
+    }
+
+    .back-to-top.visible {
+        display: flex;
+    }
+
+    .back-to-top:hover {
+        background: #2980b9;
+        transform: translateY(-5px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .section ul {
+        margin-left: 20px;
+        margin-top: 10px;
+    }
+
+    .section ul li {
+        margin-bottom: 8px;
+        line-height: 1.7;
+    }
+
+    .section ol {
+        margin-left: 20px;
+        margin-top: 10px;
+    }
+
+    .section ol li {
+        margin-bottom: 10px;
+        line-height: 1.7;
+    }
+</style>
+
+<script>
+    const backToTop = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+            backToTop.classList.add('visible');
+        } else {
+            backToTop.classList.remove('visible');
+        }
+    });
+
+    document.getElementById('backToTop').addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    window.addEventListener('scroll', function() {
+        const sections = document.querySelectorAll('.section');
+        const navLinks = document.querySelectorAll('.nav a');
+
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (pageYOffset >= sectionTop - 200) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.style.background = '';
+            if (link.getAttribute('href') === '#' + current) {
+                link.style.background = '#3498db';
+            }
+        });
+    });
+</script>
+</body>
+</html>

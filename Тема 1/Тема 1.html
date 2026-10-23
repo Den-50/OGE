@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тема 1. Количественные параметры информационных объектов</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<div class="container">
+    <header class="header">
+        <h1><span class="emoji">🔡</span>Количественные параметры информационных объектов</h1>
+        <p>Кодировки текста, вес одного символа и размер сообщения — решаем простым подсчётом, без программирования</p>
+    </header>
+
+    <nav class="nav">
+        <ul>
+            <li><a href="#theory">📐 Теория</a></li>
+            <li><a href="#method">🔧 Метод решения</a></li>
+            <li><a href="#example">🎯 Разбор задачи</a></li>
+            <li><a href="#answer">✅ Ответ</a></li>
+            <li><a href="#explanation">💡 Ключевые моменты</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <section id="theory" class="section">
+            <h2><span class="emoji">📐</span>Как измерить «вес» текста</h2>
+
+            <p><strong>Информационный объект</strong> — это текст, изображение, звук и т.д. В этой теме работаем
+                с <strong>текстом</strong>. При <strong>алфавитном подходе</strong> не важен смысл текста — важно
+                только, <strong>сколько в нём символов</strong> и <strong>сколько места занимает каждый
+                    символ</strong>.</p>
+
+            <div class="example-box">
+                <h4>Главная формула темы</h4>
+                <p style="text-align: center; font-size: 1.15em;"><strong>I = K × i</strong></p>
+                <ul>
+                    <li><strong>I</strong> — информационный объём всего сообщения (в битах или байтах)</li>
+                    <li><strong>K</strong> — количество символов в сообщении</li>
+                    <li><strong>i</strong> — «вес» одного символа: сколько бит отведено на кодирование каждого
+                        символа</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <h4>Кодировки, которые встречаются в ОГЭ</h4>
+                <ul>
+                    <li><strong>8 бит на символ</strong> — однобайтовые кодировки (КОИ-8, Windows-1251). Один символ
+                        весит ровно <strong>1 байт</strong>. Такая кодировка может закодировать
+                        2<sup>8</sup> = 256 различных символов.</li>
+                    <li><strong>16 бит на символ</strong> — кодировка <strong>Unicode</strong>. Один символ весит
+                        ровно <strong>2 байта</strong>. Можно закодировать 2<sup>16</sup> = 65 536 символов — хватает
+                        на все языки мира.</li>
+                </ul>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Единица</th>
+                        <th>Соотношение</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>1 байт</td><td>8 бит</td></tr>
+                    <tr><td>1 Кбайт</td><td>1024 байта</td></tr>
+                    <tr><td>1 Мбайт</td><td>1024 Кбайта</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="success">
+                <strong>💡 Главная идея задач на «удаление слова»:</strong> если из текста удалили часть символов,
+                то объём текста уменьшился ровно на <strong>(число удалённых символов) × (вес одного символа)</strong>.
+                Зная уменьшение объёма и кодировку, можно узнать число удалённых символов — а по нему найти само
+                удалённое слово.
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Важно:</strong> символ — это <strong>каждый</strong> знак в тексте: буква, цифра,
+                пробел, запятая, точка, двоеточие, тире и даже дефис внутри слова. Все они «весят» одинаково —
+                по i бит каждый.
+            </div>
+        </section>
+
+        <section id="method" class="section">
+            <h2><span class="emoji">🔧</span>Метод решения задач на удаление слова</h2>
+
+            <p>Все задания этого типа решаются по одной и той же схеме из четырёх шагов.</p>
+
+            <div class="task-card">
+                <h4>1. Переведите разницу объёмов в число символов</h4>
+                <div class="solution">
+                    <p>Разделите разницу размеров (в битах или байтах) на вес одного символа. Получите, сколько
+                        символов было удалено всего.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>2. Вычтите «лишние» знаки</h4>
+                <div class="solution">
+                    <p>Вместе со словом всегда удаляются сопутствующие знаки: лишняя запятая и пробел (по условию
+                        два пробела не должны идти подряд). Вычтите их из общего числа удалённых символов —
+                        остаток и есть длина удалённого слова.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>3. Посчитайте длину каждого слова-кандидата</h4>
+                <div class="solution">
+                    <p>Выпишите все слова из списка и аккуратно сосчитайте символы в каждом, не забывая про дефисы.
+                        Слово с нужной длиной обычно только одно.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>4. Проверьте себя</h4>
+                <div class="solution">
+                    <p>Сложите длину найденного слова и число удалённых знаков препинания, умножьте на вес символа —
+                        должна получиться ровно та разница, что дана в условии.</p>
+                </div>
+            </div>
+
+            <div class="warning">
+                <strong>📌 Важно:</strong> разницу объёмов могут давать в битах или в байтах — а вес символа тоже
+                в битах или в байтах. Прежде чем делить, <strong>приведите всё к одним единицам</strong>!
+            </div>
+        </section>
+
+        <section id="example" class="section">
+            <h2><span class="emoji">🎯</span>Разбор задачи</h2>
+
+            <h3>Условие задачи</h3>
+
+            <p>В одной из кодировок Unicode каждый символ кодируется <strong>16 битами</strong>. Ученик написал
+                текст (в нём нет лишних пробелов):</p>
+
+            <div class="example-box">
+                <p>«Мои любимые герои мультфильмов: Шрек, Пумба, Маугли, Рататуй, Пиноккио, Винни-Пух, Белоснежка,
+                    Малефисента, Человек-паук, Конек-Горбунок».</p>
+            </div>
+
+            <p>Ученик удалил из списка имя героя одного мультфильма, а также лишние запятую и пробел — два пробела
+                не должны идти подряд.</p>
+
+            <div class="warning">
+                <strong>❓ Вопрос:</strong> размер нового предложения в данной кодировке оказался на
+                <strong>12 байт меньше</strong>, чем размер исходного предложения. Напишите в ответе удалённое имя
+                героя мультфильма.
+            </div>
+
+            <h3>Шаг 1. Переводим разницу объёмов в число символов</h3>
+
+            <p>Каждый символ кодируется 16 битами, а 16 бит = <strong>2 байта</strong>. Значит, один символ весит
+                ровно 2 байта. Текст стал легче на 12 байт:</p>
+
+            <div class="example-box">
+                <p style="text-align: center;">12 байт ÷ 2 байта/символ = <strong>6 символов удалено всего</strong></p>
+            </div>
+
+            <h3>Шаг 2. Вычитаем лишние запятую и пробел</h3>
+
+            <p>Вместе с именем героя удалены ещё <strong>2 знака</strong>: одна запятая и один пробел. Значит, на
+                само имя героя приходится:</p>
+
+            <div class="example-box">
+                <p style="text-align: center;">6 − 2 = <strong>4 символа в удалённом имени</strong></p>
+            </div>
+
+            <h3>Шаг 3. Считаем длину каждого имени в списке</h3>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Имя героя</th>
+                        <th>Подсчёт</th>
+                        <th>Длина</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr style="background: #d4edda;">
+                        <td><strong>Шрек</strong></td>
+                        <td>Ш-р-е-к</td>
+                        <td><strong>4</strong> ✔</td>
+                    </tr>
+                    <tr><td>Пумба</td><td>П-у-м-б-а</td><td>5</td></tr>
+                    <tr><td>Маугли</td><td>М-а-у-г-л-и</td><td>6</td></tr>
+                    <tr><td>Рататуй</td><td>Р-а-т-а-т-у-й</td><td>7</td></tr>
+                    <tr><td>Пиноккио</td><td>П-и-н-о-к-к-и-о</td><td>8</td></tr>
+                    <tr><td>Винни-Пух</td><td>В-и-н-н-и-<strong>-</strong>-П-у-х</td><td>9</td></tr>
+                    <tr><td>Белоснежка</td><td>Б-е-л-о-с-н-е-ж-к-а</td><td>10</td></tr>
+                    <tr><td>Малефисента</td><td>М-а-л-е-ф-и-с-е-н-т-а</td><td>11</td></tr>
+                    <tr><td>Человек-паук</td><td>Ч-е-л-о-в-е-к-<strong>-</strong>-п-а-у-к</td><td>12</td></tr>
+                    <tr><td>Конек-Горбунок</td><td>К-о-н-е-к-<strong>-</strong>-Г-о-р-б-у-н-о-к</td><td>14</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p>Имя длиной ровно <strong>4 символа</strong> в списке только одно — <strong>Шрек</strong>. Обратите
+                внимание: в словах с дефисом (Винни-Пух, Человек-паук, Конек-Горбунок) дефис тоже считается
+                символом, поэтому их длина больше, чем кажется на первый взгляд.</p>
+
+            <h3>Шаг 4. Проверка</h3>
+
+            <div class="example-box">
+                <p>Удалено: «Шрек» (4 символа) + «,» (1) + « » (1) = 6 символов.<br>
+                    6 символов × 2 байта = <strong>12 байт</strong> — совпадает с условием. ✔</p>
+            </div>
+        </section>
+
+        <section id="answer" class="section">
+            <h2><span class="emoji">✅</span>Ответ</h2>
+
+            <div class="success">
+                <h4>✅ Ответ: Шрек</h4>
+                <p>Удалённое имя героя — <strong>Шрек</strong>. Вместе с запятой и пробелом удалено 6 символов,
+                    что в 16-битной кодировке Unicode (2 байта на символ) даёт уменьшение размера текста ровно на
+                    12 байт.</p>
+            </div>
+        </section>
+
+        <section id="explanation" class="section">
+            <h2><span class="emoji">💡</span>Ключевые моменты при решении</h2>
+
+            <div class="task-card">
+                <h4>1. 16 бит = 2 байта</h4>
+                <div class="solution">
+                    <p>Не забывайте переводить биты в байты (делением на 8), если разница размеров дана в байтах.
+                        Делить байты на биты нельзя — сначала приведите всё к одним единицам.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>2. Удаляются не только буквы слова</h4>
+                <div class="solution">
+                    <p>Вместе со словом из списка всегда убирают запятую и пробел (по 1 символу каждый). Забыть про
+                        них — самая частая ошибка: тогда длина слова получится на 2 больше и ответ будет неверным.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>3. Дефис — тоже символ</h4>
+                <div class="solution">
+                    <p>В словах «Винни-Пух», «Человек-паук», «Конек-Горбунок» дефис занимает место наравне с буквами
+                        и весит те же 16 бит. Считайте его обязательно.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>4. Подходят и обратные задачи</h4>
+                <div class="solution">
+                    <p>Бывают варианты, где слово <strong>добавляют</strong> в список (тогда размер растёт) или
+                        спрашивают размер текста до/после изменения. Схема та же: I = K × i, только считаем
+                        добавленные символы вместо удалённых.</p>
+                </div>
+            </div>
+
+            <div class="success">
+                <h3>✅ Алгоритм решения любой задачи этой темы</h3>
+                <ol>
+                    <li>Найдите вес одного символа: 8 бит = 1 байт, 16 бит = 2 байта</li>
+                    <li>Переведите разницу размеров в число символов (разделите на вес символа)</li>
+                    <li>Вычтите служебные знаки (запятую и пробел) — получите длину искомого слова</li>
+                    <li>Посчитайте длины всех слов-кандидатов, не забывая про дефисы, и найдите нужное</li>
+                    <li>Проверьте: (длина слова + знаки) × вес символа = разница размеров из условия</li>
+                </ol>
+            </div>
+        </section>
+    </main>
+
+    <a href="#" id="backToTop" class="back-to-top" title="Вернуться в начало">↑</a>
+</div>
+
+<style>
+    .back-to-top {
+        display: none;
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: #3498db;
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        line-height: 1;
+        text-decoration: none;
+        cursor: pointer;
+        z-index: 999;
+        transition: all 0.3s ease;
+    }
+
+    .back-to-top.visible {
+        display: flex;
+    }
+
+    .back-to-top:hover {
+        background: #2980b9;
+        transform: translateY(-5px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .section ul {
+        margin-left: 20px;
+        margin-top: 10px;
+    }
+
+    .section ul li {
+        margin-bottom: 8px;
+        line-height: 1.7;
+    }
+
+    .section ol {
+        margin-left: 20px;
+        margin-top: 10px;
+    }
+
+    .section ol li {
+        margin-bottom: 10px;
+        line-height: 1.7;
+    }
+</style>
+
+<script>
+    const backToTop = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+            backToTop.classList.add('visible');
+        } else {
+            backToTop.classList.remove('visible');
+        }
+    });
+
+    document.getElementById('backToTop').addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    window.addEventListener('scroll', function() {
+        const sections = document.querySelectorAll('.section');
+        const navLinks = document.querySelectorAll('.nav a');
+
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (pageYOffset >= sectionTop - 200) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.style.background = '';
+            if (link.getAttribute('href') === '#' + current) {
+                link.style.background = '#3498db';
+            }
+        });
+    });
+</script>
+</body>
+</html>

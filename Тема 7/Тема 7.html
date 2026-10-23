@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тема 7. Информационно-коммуникационные технологии</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<div class="container">
+    <header class="header">
+        <h1><span class="emoji">🌐</span>Информационно-коммуникационные технологии</h1>
+        <p>Устройство адреса в сети Интернет и сборка URL из фрагментов — решаем простым упорядочиванием</p>
+    </header>
+
+    <nav class="nav">
+        <ul>
+            <li><a href="#theory">📐 Теория</a></li>
+            <li><a href="#method">🔧 Метод решения</a></li>
+            <li><a href="#example">🎯 Разбор задачи</a></li>
+            <li><a href="#answer">✅ Ответ</a></li>
+            <li><a href="#explanation">💡 Ключевые моменты</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <section id="theory" class="section">
+            <h2><span class="emoji">📐</span>Как устроен адрес файла в Интернете</h2>
+
+            <p>Каждый файл в сети Интернет имеет свой <strong>адрес — URL</strong>. Адрес всегда строится по одной
+                и той же схеме из трёх частей: <strong>протокол</strong>, <strong>сервер</strong> и
+                <strong>файл</strong>:</p>
+
+            <div class="example-box" style="text-align: center;">
+                <p style="font-size: 1.3em; letter-spacing: 0.5px;">
+                    <span style="color: #2980b9; font-weight: bold;">Протокол</span><span
+                        style="color: #7f8c8d;">://</span><span
+                        style="color: #27ae60; font-weight: bold;">Сервер</span><span
+                        style="color: #7f8c8d;">/</span><span
+                        style="color: #c0392b; font-weight: bold;">Файл</span><span
+                        style="color: #e67e22; font-weight: bold;">.расширение</span>
+                </p>
+                <table style="max-width: 640px; margin: 15px auto 5px;">
+                    <thead>
+                    <tr>
+                        <th>Часть адреса</th>
+                        <th>Что это</th>
+                        <th>Примеры</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><strong>Протокол</strong></td>
+                        <td>способ передачи данных</td>
+                        <td><span class="code">http</span>, <span class="code">https</span>, <span class="code">ftp</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>://</strong></td>
+                        <td>разделитель после протокола</td>
+                        <td>всегда именно <span class="code">://</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Сервер</strong></td>
+                        <td>адрес сайта (доменное имя)</td>
+                        <td><span class="code">teach.ru</span>, <span class="code">mail.com</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>/</strong></td>
+                        <td>разделитель перед именем файла</td>
+                        <td>одиночный слэш</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Файл</strong></td>
+                        <td>имя файла и его расширение</td>
+                        <td><span class="code">inf.docx</span>, <span class="code">data.htm</span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="success">
+                <strong>💡 Главная идея:</strong> в заданиях адрес разрезан на фрагменты, и их нужно просто
+                расставить в порядке, заданном схемой: сначала протокол, сразу за ним <span class="code">://</span>,
+                затем сервер, потом слэш <span class="code">/</span> и в самом конце — имя файла с расширением.
+                Порядок частей в адресе <strong>никогда не меняется</strong>.
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Важно:</strong> расширение файла всегда начинается с точки (<span class="code">.docx</span>,
+                <span class="code">.htm</span>, <span class="code">.jpg</span>) и стоит в адресе
+                <strong>последним</strong>. Точка внутри доменного имени сервера (<span class="code">.ru</span>,
+                <span class="code">.com</span>) относится к серверу, а не к файлу.
+            </div>
+        </section>
+
+        <section id="method" class="section">
+            <h2><span class="emoji">🔧</span>Метод решения</h2>
+
+            <div class="task-card">
+                <h4>1. Найдите в условии три главные части</h4>
+                <div class="solution">
+                    <p>Подчеркните в тексте: <strong>по какому протоколу</strong> осуществляется доступ,
+                        <strong>на каком сервере</strong> находится файл и <strong>как называется файл</strong>
+                        (вместе с расширением).</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>2. Запишите «скелет» адреса по схеме</h4>
+                <div class="solution">
+                    <p>Соберите адрес словами: <span class="code">протокол :// сервер / файл.расширение</span>.
+                        Сначала делайте это без цифр, просто названиями частей — так проще не запутаться.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>3. Замените каждую часть номером её фрагмента</h4>
+                <div class="solution">
+                    <p>Идите по списку фрагментов и подставляйте номера. Если сервер или файл собраны из двух
+                        фрагментов (например, <span class="code">teach</span> и <span class="code">.ru</span>) —
+                        номера идут подряд в том же порядке, что и кусочки внутри названия.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>4. Проверьте себя сборкой</h4>
+                <div class="solution">
+                    <p>Прочитайте фрагменты в порядке полученных номеров — должен получиться осмысленный адрес,
+                        где <span class="code">://</span> стоит сразу после протокола, а расширение файла — в
+                        самом конце.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="example" class="section">
+            <h2><span class="emoji">🎯</span>Разбор задачи</h2>
+
+            <h3>Условие задачи</h3>
+
+            <p>Доступ к файлу <strong>inf.docx</strong>, находящемуся на сервере <strong>teach.ru</strong>,
+                осуществляется по протоколу <strong>ftp</strong>. Фрагменты адреса файла закодированы цифрами
+                от 1 до 7:</p>
+
+            <div class="table-container">
+                <table style="max-width: 320px; margin: 20px auto;">
+                    <thead>
+                    <tr><th>Цифра</th><th>Фрагмент</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>1</td><td><span class="code">teach</span></td></tr>
+                    <tr><td>2</td><td><span class="code">ftp</span></td></tr>
+                    <tr><td>3</td><td><span class="code">inf</span></td></tr>
+                    <tr><td>4</td><td><span class="code">/</span></td></tr>
+                    <tr><td>5</td><td><span class="code">://</span></td></tr>
+                    <tr><td>6</td><td><span class="code">.docx</span></td></tr>
+                    <tr><td>7</td><td><span class="code">.ru</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="warning">
+                <strong>❓ Вопрос:</strong> запишите в ответе последовательность этих цифр, кодирующую адрес
+                указанного файла в сети Интернет.
+            </div>
+
+            <h3>Шаг 1. Выписываем три части из условия</h3>
+
+            <div class="example-box">
+                <ul>
+                    <li>Протокол: <span class="code">ftp</span></li>
+                    <li>Сервер: <span class="code">teach.ru</span></li>
+                    <li>Файл: <span class="code">inf.docx</span></li>
+                </ul>
+            </div>
+
+            <h3>Шаг 2. Собираем скелет адреса по схеме</h3>
+
+            <div class="example-box" style="text-align: center;">
+                <p style="font-size: 1.2em;">
+                    <span style="color: #2980b9; font-weight: bold;">ftp</span><span
+                        style="color: #7f8c8d;">://</span><span
+                        style="color: #27ae60; font-weight: bold;">teach.ru</span><span
+                        style="color: #7f8c8d;">/</span><span
+                        style="color: #c0392b; font-weight: bold;">inf</span><span
+                        style="color: #e67e22; font-weight: bold;">.docx</span>
+                </p>
+                <p style="color: #7f8c8d; font-size: 0.95em;">протокол → :// → сервер → / → имя файла → расширение</p>
+            </div>
+
+            <h3>Шаг 3. Заменяем части номерами фрагментов</h3>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Часть адреса</th>
+                        <th>ftp</th>
+                        <th>://</th>
+                        <th>teach</th>
+                        <th>.ru</th>
+                        <th>/</th>
+                        <th>inf</th>
+                        <th>.docx</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><strong>Номер фрагмента</strong></td>
+                        <td><strong>2</strong></td>
+                        <td><strong>5</strong></td>
+                        <td><strong>1</strong></td>
+                        <td><strong>7</strong></td>
+                        <td><strong>4</strong></td>
+                        <td><strong>3</strong></td>
+                        <td><strong>6</strong></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Шаг 4. Проверка сборкой</h3>
+
+            <div class="example-box">
+                <p style="text-align: center;">2 → 5 → 1 → 7 → 4 → 3 → 6<br>
+                    <span class="code">ftp</span> + <span class="code">://</span> + <span class="code">teach</span> +
+                    <span class="code">.ru</span> + <span class="code">/</span> + <span class="code">inf</span> +
+                    <span class="code">.docx</span> = <span class="code">ftp://teach.ru/inf.docx</span> ✔</p>
+                <p>Получился осмысленный адрес: протокол <span class="code">ftp</span>, сразу за ним
+                    <span class="code">://</span>, сервер <span class="code">teach.ru</span>, слэш и файл
+                    <span class="code">inf.docx</span> в конце.</p>
+            </div>
+        </section>
+
+        <section id="answer" class="section">
+            <h2><span class="emoji">✅</span>Ответ</h2>
+
+            <div class="success">
+                <h4>✅ Ответ: 2517436</h4>
+                <p>Полный адрес файла — <span class="code">ftp://teach.ru/inf.docx</span>, что соответствует
+                    последовательности цифр <strong>2517436</strong>.</p>
+            </div>
+        </section>
+
+        <section id="explanation" class="section">
+            <h2><span class="emoji">💡</span>Ключевые моменты при решении</h2>
+
+            <div class="task-card">
+                <h4>1. :// идёт только после протокола</h4>
+                <div class="solution">
+                    <p>Фрагмент <span class="code">://</span> в адресе встречается один раз и всегда стоит на
+                        втором месте — сразу после протокола. Это лучшая «зацепка»: нашли протокол — следующий
+                        номер почти наверняка у <span class="code">://</span>.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>2. Сервер может состоять из нескольких фрагментов</h4>
+                <div class="solution">
+                    <p>Доменное имя часто разрезано на части: <span class="code">teach</span> +
+                        <span class="code">.ru</span>, <span class="code">www</span> +
+                        <span class="code">school</span> + <span class="code">.ru</span>. Все эти номера идут
+                        подряд, и внутри сервера слэша быть не может.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>3. Расширение файла — всегда в конце</h4>
+                <div class="solution">
+                    <p>Фрагмент с точкой и буквами формата (<span class="code">.docx</span>,
+                        <span class="code">.htm</span>, <span class="code">.jpg</span>) — последний в ответе.
+                        Не путайте его с точкой домена: <span class="code">.ru</span> относится к серверу и стоит
+                        до слэша.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>4. Слэш разделяет сервер и файл</h4>
+                <div class="solution">
+                    <p>Одиночный <span class="code">/</span> стоит между доменным именем и именем файла. Если файл
+                        лежит в папке, слэшей может быть несколько: <span class="code">сервер/папка/файл</span> —
+                        тогда слэш встретится в списке фрагментов дважды или будет отдельным фрагментом-папкой.</p>
+                </div>
+            </div>
+
+            <div class="success">
+                <h3>✅ Алгоритм решения любой задачи этой темы</h3>
+                <ol>
+                    <li>Выпишите из условия протокол, сервер и имя файла с расширением</li>
+                    <li>Соберите адрес по схеме: протокол → :// → сервер → / → файл.расширение</li>
+                    <li>Подставьте вместо каждой части номер её фрагмента</li>
+                    <li>Проверьте: прочитайте фрагменты по номерам — должен получиться правильный адрес</li>
+                </ol>
+            </div>
+        </section>
+    </main>
+
+    <a href="#" id="backToTop" class="back-to-top" title="Вернуться в начало">↑</a>
+</div>
+
+<style>
+    .back-to-top {
+        display: none;
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: #3498db;
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        line-height: 1;
+        text-decoration: none;
+        cursor: pointer;
+        z-index: 999;
+        transition: all 0.3s ease;
+    }
+
+    .back-to-top.visible {
+        display: flex;
+    }
+
+    .back-to-top:hover {
+        background: #2980b9;
+        transform: translateY(-5px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .section ul {
+        margin-left: 20px;
+        margin-top: 10px;
+    }
+
+    .section ul li {
+        margin-bottom: 8px;
+        line-height: 1.7;
+    }
+
+    .section ol {
+        margin-left: 20px;
+        margin-top: 10px;
+    }
+
+    .section ol li {
+        margin-bottom: 10px;
+        line-height: 1.7;
+    }
+</style>
+
+<script>
+    const backToTop = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+            backToTop.classList.add('visible');
+        } else {
+            backToTop.classList.remove('visible');
+        }
+    });
+
+    document.getElementById('backToTop').addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    window.addEventListener('scroll', function() {
+        const sections = document.querySelectorAll('.section');
+        const navLinks = document.querySelectorAll('.nav a');
+
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (pageYOffset >= sectionTop - 200) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.style.background = '';
+            if (link.getAttribute('href') === '#' + current) {
+                link.style.background = '#3498db';
+            }
+        });
+    });
+</script>
+</body>
+</html>

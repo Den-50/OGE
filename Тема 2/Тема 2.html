@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тема 2. Кодирование и декодирование информации</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<div class="container">
+    <header class="header">
+        <h1><span class="emoji">🔐</span>Кодирование и декодирование информации</h1>
+        <p>Таблицы кодов и расшифровка сообщений — решаем простым разбиением на группы, без программирования</p>
+    </header>
+
+    <nav class="nav">
+        <ul>
+            <li><a href="#theory">📐 Теория</a></li>
+            <li><a href="#method">🔧 Метод решения</a></li>
+            <li><a href="#example">🎯 Разбор задачи</a></li>
+            <li><a href="#answer">✅ Ответ</a></li>
+            <li><a href="#explanation">💡 Ключевые моменты</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <section id="theory" class="section">
+            <h2><span class="emoji">📐</span>Что такое код и декодирование</h2>
+
+            <p><strong>Кодирование</strong> — это замена каждой буквы сообщения на её <strong>кодовое слово</strong>
+                из таблицы (например, А → <span class="code">..o..</span>). <strong>Декодирование</strong> —
+                обратная операция: по закодированной строке и таблице кодов восстанавливаем исходное
+                сообщение.</p>
+
+            <div class="example-box">
+                <h4>Два вида кодов в заданиях ОГЭ</h4>
+                <ul>
+                    <li><strong>Равномерный код</strong> — все кодовые слова имеют <strong>одинаковую
+                        длину</strong>. Расшифровать сообщение проще всего: просто режем строку на группы
+                        одинаковой длины и заменяем каждую группу буквой из таблицы.</li>
+                    <li><strong>Неравномерный код</strong> — кодовые слова разной длины. Чтобы сообщение
+                        расшифровывалось однозначно, такой код должен удовлетворять <strong>условию
+                            Фано</strong> (ни одно кодовое слово не является началом другого). Этот случай
+                        разбирается в отдельной теме.</li>
+                </ul>
+            </div>
+
+            <div class="success">
+                <strong>💡 Главная идея:</strong> если все коды в таблице одинаковой длины — задача сводится к
+                разбиению строки на равные куски. Длина сообщения всегда делится на длину одного кода без
+                остатка.
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Важно:</strong> символы кода могут быть любыми: <span class="code">0</span> и
+                <span class="code">1</span>, точки и тире (азбука Морзе), точки и буквы <span class="code">o</span>
+                — как в этой задаче. Суть от этого не меняется: сравниваем куски строки с таблицей.
+            </div>
+        </section>
+
+        <section id="method" class="section">
+            <h2><span class="emoji">🔧</span>Метод решения задач на декодирование</h2>
+
+            <div class="task-card">
+                <h4>1. Проверьте длины кодов в таблице</h4>
+                <div class="solution">
+                    <p>Если все кодовые слова одинаковой длины — код равномерный, и сообщение режется на группы
+                        этой длины. Длина всего сообщения должна делиться на длину кода нацело — это быстрая
+                        проверка, что вы правильно определили длину группы.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>2. Разбейте сообщение на группы</h4>
+                <div class="solution">
+                    <p>Отсчитывайте символы аккуратно, слева направо, и разделяйте группы вертикальными чёрточками
+                        или пробелами. Ошибка в одном символе сдвинет всё разбиение — поэтому после разбиения
+                        перепроверьте, что каждая группа есть в таблице кодов.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>3. Замените каждую группу буквой из таблицы</h4>
+                <div class="solution">
+                    <p>Подпишите под каждой группой соответствующую букву — получится исходное слово или
+                        сообщение.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>4. Ответьте на вопрос задачи</h4>
+                <div class="solution">
+                    <p>Прочитайте, что именно требуется: само расшифрованное слово, повторяющиеся буквы, букву на
+                        определённой позиции и т.д. <strong>Повторяющиеся</strong> буквы — это те, что встречаются
+                        в сообщении <strong>два раза и более</strong>.</p>
+                </div>
+            </div>
+
+            <div class="warning">
+                <strong>📌 Важно:</strong> если длина сообщения не делится на длину кода — значит, код
+                неравномерный, и делить на равные группы нельзя. Тогда действуем через условие Фано: ищем,
+                какие кодовые слова могут стоять в начале строки, и отрезаем их по одному.
+            </div>
+        </section>
+
+        <section id="example" class="section">
+            <h2><span class="emoji">🎯</span>Разбор задачи</h2>
+
+            <h3>Условие задачи</h3>
+
+            <p>Сообщение было зашифровано кодом. Использовались только буквы, приведённые в таблице:</p>
+
+            <div class="table-container">
+                <table style="text-align: center; max-width: 560px; margin: 20px auto;">
+                    <thead>
+                    <tr>
+                        <th>А</th>
+                        <th>Б</th>
+                        <th>В</th>
+                        <th>Г</th>
+                        <th>Д</th>
+                        <th>Е</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><span class="code">..o..</span></td>
+                        <td><span class="code">.o..o</span></td>
+                        <td><span class="code">.oo.o</span></td>
+                        <td><span class="code">.oooo</span></td>
+                        <td><span class="code">...o.</span></td>
+                        <td><span class="code">.o.oo</span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="warning">
+                <strong>❓ Вопрос:</strong> определите, какие буквы в сообщении <strong>повторяются</strong>, и
+                запишите их в ответе.
+                <p style="margin-top: 10px; text-align: center;"><span class="code">...o..o.oo...o..oooo.o.oo</span></p>
+            </div>
+
+            <h3>Шаг 1. Проверяем длины кодов</h3>
+
+            <p>Все шесть кодовых слов состоят ровно из <strong>5 символов</strong> — код равномерный. Значит,
+                сообщение можно просто резать на группы по 5 знаков.</p>
+
+            <h3>Шаг 2. Проверяем делимость и режем сообщение</h3>
+
+            <p>В сообщении <span class="code">...o..o.oo...o..oooo.o.oo</span> всего <strong>25 символов</strong>,
+                а 25 ÷ 5 = 5 — значит, в сообщении ровно 5 букв, и разбиение точно правильное по длине:</p>
+
+            <div class="example-box">
+                <p style="text-align: center; font-size: 1.1em;">
+                    <span class="code">...o.</span> | <span class="code">.o.oo</span> | <span class="code">...o.</span> | <span class="code">.oooo</span> | <span class="code">.o.oo</span>
+                </p>
+            </div>
+
+            <h3>Шаг 3. Заменяем группы буквами из таблицы</h3>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Группа</th>
+                        <th>Код из таблицы</th>
+                        <th>Буква</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>1</td><td><span class="code">...o.</span></td><td><strong>Д</strong></td></tr>
+                    <tr><td>2</td><td><span class="code">.o.oo</span></td><td><strong>Е</strong></td></tr>
+                    <tr><td>3</td><td><span class="code">...o.</span></td><td><strong>Д</strong></td></tr>
+                    <tr><td>4</td><td><span class="code">.oooo</span></td><td><strong>Г</strong></td></tr>
+                    <tr><td>5</td><td><span class="code">.o.oo</span></td><td><strong>Е</strong></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p>Расшифрованное сообщение: <strong>Д Е Д Г Е</strong>.</p>
+
+            <h3>Шаг 4. Находим повторяющиеся буквы</h3>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Буква</th>
+                        <th>Д</th>
+                        <th>Е</th>
+                        <th>Г</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><strong>Сколько раз встречается</strong></td>
+                        <td>2 ✔</td>
+                        <td>2 ✔</td>
+                        <td>1</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p>Буквы <strong>Д</strong> и <strong>Е</strong> встречаются по два раза — это и есть повторяющиеся
+                буквы. Буква Г встречается один раз и в ответ не идёт.</p>
+        </section>
+
+        <section id="answer" class="section">
+            <h2><span class="emoji">✅</span>Ответ</h2>
+
+            <div class="success">
+                <h4>✅ Ответ: ДЕ</h4>
+                <p>Сообщение расшифровывается как <strong>ДЕДГЕ</strong>. Повторяются буквы <strong>Д</strong> и
+                    <strong>Е</strong> (по два раза каждая).</p>
+            </div>
+        </section>
+
+        <section id="explanation" class="section">
+            <h2><span class="emoji">💡</span>Ключевые моменты при решении</h2>
+
+            <div class="task-card">
+                <h4>1. Сначала проверьте, равномерный ли код</h4>
+                <div class="solution">
+                    <p>Сравните длины всех кодовых слов в таблице. Одинаковые — режьте сообщение на равные группы,
+                        это самый быстрый путь. Разные — применяйте условие Фано и отрезайте коды по одному от
+                        начала строки.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>2. Делимость — ваша проверка</h4>
+                <div class="solution">
+                    <p>При равномерном коде длина сообщения обязана делиться на длину кода. Если не делится —
+                        вы ошиблись в подсчёте символов сообщения или длины кода. Пересчитайте.</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>3. Не путайте символы кода</h4>
+                <div class="solution">
+                    <p>Точки, буквы <span class="code">o</span>, нули и единицы легко перепутать при отсчёте.
+                        Разделяйте группы чёрточками и сверяйте каждую с таблицей, а не «на глаз».</p>
+                </div>
+            </div>
+
+            <div class="task-card">
+                <h4>4. Читайте вопрос до конца</h4>
+                <div class="solution">
+                    <p>Иногда просят само расшифрованное слово, иногда — только повторяющиеся буквы или букву на
+                        конкретном месте. В этой задаче в ответ идут только буквы, встречающиеся два раза и
+                        более: Г встречается один раз и в ответ не включается.</p>
+                </div>
+            </div>
+
+            <div class="success">
+                <h3>✅ Алгоритм решения любой задачи этой темы</h3>
+                <ol>
+                    <li>Проверьте, одинаковая ли длина у всех кодовых слов (равномерный код)</li>
+                    <li>Если да — убедитесь, что длина сообщения делится на длину кода, и разбейте на группы</li>
+                    <li>Замените каждую группу буквой из таблицы — получите сообщение</li>
+                    <li>Ответьте именно на тот вопрос, что задан (слово целиком, повторяющиеся буквы и т.д.)</li>
+                </ol>
+            </div>
+        </section>
+    </main>
+
+    <a href="#" id="backToTop" class="back-to-top" title="Вернуться в начало">↑</a>
+</div>
+
+<style>
+    .back-to-top {
+        display: none;
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: #3498db;
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        line-height: 1;
+        text-decoration: none;
+        cursor: pointer;
+        z-index: 999;
+        transition: all 0.3s ease;
+    }
+
+    .back-to-top.visible {
+        display: flex;
+    }
+
+    .back-to-top:hover {
+        background: #2980b9;
+        transform: translateY(-5px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .section ul {
+        margin-left: 20px;
+        margin-top: 10px;
+    }
+
+    .section ul li {
+        margin-bottom: 8px;
+        line-height: 1.7;
+    }
+
+    .section ol {
+        margin-left: 20px;
+        margin-top: 10px;
+    }
+
+    .section ol li {
+        margin-bottom: 10px;
+        line-height: 1.7;
+    }
+</style>
+
+<script>
+    const backToTop = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+            backToTop.classList.add('visible');
+        } else {
+            backToTop.classList.remove('visible');
+        }
+    });
+
+    document.getElementById('backToTop').addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    window.addEventListener('scroll', function() {
+        const sections = document.querySelectorAll('.section');
+        const navLinks = document.querySelectorAll('.nav a');
+
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (pageYOffset >= sectionTop - 200) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.style.background = '';
+            if (link.getAttribute('href') === '#' + current) {
+                link.style.background = '#3498db';
+            }
+        });
+    });
+</script>
+</body>
+</html>
